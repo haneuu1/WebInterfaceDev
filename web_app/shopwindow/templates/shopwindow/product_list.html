@@ -1,6 +1,6 @@
 <h1>hihihi</h1>
 {% for product in object_list %}
-<a href = "{% url 'shopwindow:detail' prod %}">
+<a href = "{% url 'shopwindow:detail' product.id %}">
     <div class="container">
         <h3>{{product.name}}</h3>
         <h3>{{product.price}}</h3>
