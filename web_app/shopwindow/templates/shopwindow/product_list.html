@@ -1,0 +1,21 @@
+<h1>hihihi</h1>
+{% for product in object_list %}
+<a href = "{% url 'shopwindow:detail' product.id %}">
+    <div class="container">
+        <h3>{{product.name}}</h3>
+        <h3>{{product.price}}</h3>
+        <h3>{{product.description}}</h3>
+    </div>
+</a>
+{% endfor %}
+<div>
+    <span>
+        {% if page_obj.has_previous %}
+        <a href="?page={{page_obj.previous_page_number}}">Prev</a>
+        {% endif %}
+        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages}}
+        {% if page_obj.has_next %}
+        <a href="?page={{page_obj.next_page_number}}">Next</a>
+        {% endif %}
+    </span>
+</div>
