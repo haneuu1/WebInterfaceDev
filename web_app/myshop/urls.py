@@ -21,4 +21,5 @@ urlpatterns = [
 
     path('product/',include('shopwindow.urls')),
     
+
 ]
