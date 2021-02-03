@@ -8,7 +8,7 @@ urlpatterns = [
     path('',ProductLV.as_view(),name= 'index'),
     #/<product:id>
     path('<int:pk>', ProductDV.as_view(), name='detail'), 
-
+    #/category/<str:category>
     path('category/<str:category>',Productcategory.as_view(),name='category' )
 
 
