@@ -1,37 +1,17 @@
-<!DOCTYPE html>
-<html lang="kr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-
-
-
+{% extends "base_category.html" %}
+{% block title %}product_list.html{% endblock %}
+{% block content %}
 
 <div class="container">
 
-    <div class="row">
+    <div class="card-deck">
         {% for product in object_list %}
             {% include "product_card.html" %}
         {% endfor %}
     </div>
 
-    <div class="center-block text-center">
-
-        {% if page_obj.has_previous %}
-        <a href="?page={{page_obj.previous_page_number}}">Prev</a>
-        {% endif %}
-        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages}}
-        {% if page_obj.has_next %}
-        <a href="?page={{page_obj.next_page_number}}">Next</a>
-        {% endif %}
-
-    </div>
+    <br>
+    {% include "pagination.html" %}
 
 </div>
 <!-- 
@@ -40,5 +20,4 @@
 
 -->
 
-
-</html>
+{% endblock %}
