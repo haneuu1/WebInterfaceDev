@@ -1,11 +1,23 @@
-<div class="col-4">
-    <a href="{% url 'shopwindow:detail' cart_item.product_id %}">
-        <div class="card mb-3">
-            <img class="card-img-top" src="{{cart_item.product.image.thumb_url}}" alt="" >
-            <div class="card-body">
-                <h4 class="card-title">{{ cart_item }}</h4>
-                <p class="card-text">{{ cart_item.quantity}}개</p>
-            </div>
+<tr>
+    <td>
+        <div class="checkbox">
+            <input type="checkbox" checked id="check"/>
         </div>
-    </a>
-</div>
+    </td>
+    <td>
+        <a href="{% url 'shopwindow:detail' cart_item.product_id %}">
+            <img width="30%" alt="상품사진"
+                src="{{cart_item.product.image.thumb_url}}">
+            {{ cart_item }}
+        </a>
+    </td>
+    <td>{{ cart_item.sub_total }}</td>
+    <td>
+        <div class="btn-group">
+            <button type ="button" style="width:30px;">+</button>
+            <input type="text" name="pop_out" value="{{ cart_item.quantity }}" readonly="readonly" style="text-align:center; width:30px;"/>
+            <button type="button" style="width:30px;">-</button>
+        </div>
+    </td>
+    <td><a href="{% url 'cart:delete' cart_item.id %}"><i class="fas fa-times"></i></a></td>
+</tr>

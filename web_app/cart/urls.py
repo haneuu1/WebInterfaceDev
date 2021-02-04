@@ -4,9 +4,10 @@ from cart.views import *
 app_name = 'cart'
 
 urlpatterns = [
-    #/cart
-    path('',CartItemLV.as_view(),name= 'cart'),
-    #/<cart:id>
-    # path('<int:pk>', CartView.as_view(), name='detail'), 
+    # /cart/cart_id
+    path('<int:cart_id>',CartItemLV.as_view(), name='index'),
+    # /cart/cart_id/delete
+    path('<int:cart_id>', CartItemDeleteVeiw.as_view(), name='delete'), 
     
+
 ]
