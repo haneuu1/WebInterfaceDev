@@ -7,8 +7,11 @@
 
 <form class="navbar-nav ml-auto mr-auto" action="{% url 'shopwindow:search'  %}" method="post">
     {% csrf_token %}
-    <div class="searchbar">
-        <input class="search_input" type="text" name="search_word" required="" id="id_search_word" placeholder="Search">
-        <input class="search_icon btn_submit" type="submit" value="Submit">
+    <div class="searchbar ">
+        <input class="search_input " type="text" name="search_word" required="" id="id_search_word" placeholder="Search">
+        <button type="submit" class="transparents">
+            <i class="fas fa-search"></i>
+        </button>
+        
     </div>
 </form>
