@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'shopwindow',
     'photo',
     'accounts',
+    'order',
 
 ]
 
