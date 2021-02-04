@@ -1,12 +1,22 @@
 from django.shortcuts import render
 from django.views.generic import ListView,DetailView
-from shopwindow.models import Product
+from shopwindow.models import Category, Product
 
 
 # Create your views here.
 class ProductLV(ListView):
     model = Product
     paginate_by = 6
+
+    def get_queryset(self):
+        return Product.objects.category.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category'] = self.kwargs['category']
+
+
+        return context
 
 class ProductDV(DetailView):
     model = Product
@@ -23,4 +33,5 @@ class Productcategory(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
+
         return context
