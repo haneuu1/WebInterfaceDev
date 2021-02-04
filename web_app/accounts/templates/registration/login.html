@@ -1,17 +1,46 @@
-{% extends 'base.html' %}
-{% block title %}- Login{% endblock %}
+{% extends 'base_category.html' %}
+{% load widget_tweaks %}
+{% block title %}Login{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 panel panel-default">
-            <div class="alert alert-info">Please enter your login information.</div>
-            <form action="" method="post">
-                {{form.as_p}}
-                {% csrf_token %}
-                <input class="btn btn-primary" type="submit" value="Login">
-            </form>
+<h3 class="h3 mb-3 font-weight-normal" style="text-align: center"><i class="fas fa-sign-in-alt"></i> 로그인</h3>
+
+{% if form.errors %}
+<div class="form-group row">
+    <div class="offset-sm-3 col-sm-6">
+        <div class="alert alert-danger">
+            <div class="font-weight-bold">
+                Wrong! Please correct the error(s) below.
+            </div>
+            {{ form.errors }}
         </div>
-        <div class="col-md-2"></div>
     </div>
+</div>
+{% endif %}
+
+<form action="." method="post">
+    {% csrf_token %}
+    <div class="form-group row">
+        <div class="offset-sm-3 col-sm-6">
+            {{ form.username|add_class:"form-control"|append_attr:"placeholder:아이디" }}
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-3 col-sm-6">
+            {{ form.password|add_class:"form-control"|append_attr:"placeholder:비밀번호" }}
+        </div>
+    </div>
+    <hr>
+    <div class="form-group">
+        <div class="offset-sm-3 col-sm-6">
+            <input type="submit" value="로그인" class="btn btn-dark btn-block my-1" />
+            <input type="hidden" name="next" value="{% url 'shopwindow:index' %}" />
+            <a class="btn btn-dark btn-block my-1" href="{% url 'accounts:register' %}">
+                <i class="fas fa-user-plus"></i>회원가입
+            </a>
+        </div>
+    </div>
+</form>
+
 {% endblock %}
