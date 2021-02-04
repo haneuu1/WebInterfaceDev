@@ -2,6 +2,13 @@ from django.shortcuts import render
 from django.views.generic import ListView,DetailView
 from shopwindow.models import Category, Product
 
+from django.views.generic import FormView
+from django.db.models import Q
+from django.shortcuts import render
+
+from shopwindow.forms import ProductSearchForm
+
+
 
 # Create your views here.
 class ProductLV(ListView):
@@ -45,3 +52,21 @@ class Productcategory(ListView):
 
         return context
 
+#--- FormView
+class SearchFormView(FormView):
+    form_class = ProductSearchForm
+    template_name = 'shopwindow/product_list.html'
+
+    def form_valid(self, form):
+        searchWord = form.cleaned_data['search_word']
+        post_list = Product.objects.filter(\
+                    Q(name__icontains=searchWord) |\
+                    Q(description__icontains=searchWord) \
+                    ).distinct()
+
+        context = {}
+        context['form'] = form
+        context['search_term'] = searchWord
+        context['object_list'] = post_list
+
+        return render(self.request, self.template_name, context)
