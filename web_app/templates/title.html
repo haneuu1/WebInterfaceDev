@@ -55,16 +55,21 @@
 
 <nav class="navbar navbar-expand-sm navbar-light bg-light">
     <!-- 검색창 -->
-    <ul class="navbar-nav ml-auto mr-auto">
+    <ul class="navbar-nav mr-auto">
         <div class="searchbar">
             <input class="search_input" type="text" name="" placeholder="Search">
             <a href="#" class="search_icon"><i class="fas fa-search"></i></a>
         </div>
     </ul>
 
-    <!-- 장바구니 / 로그인 아이콘 -->
+    <!-- 장바구니 / 마이페이지 / 로그인 아이콘 -->
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i></a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login'%}"><i class="far fa-user"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i> 장바구니</a></li>
+        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-user"></i> 마이페이지</a></li>
+        {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login'%}"><i class="fas fa-sign-in-alt"></i> 로그인</a></li>
+        {% endif %}   
     </ul>
 </nav>
