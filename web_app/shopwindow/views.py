@@ -35,3 +35,4 @@ class Productcategory(ListView):
         context['category'] = self.kwargs['category']
 
         return context
+
