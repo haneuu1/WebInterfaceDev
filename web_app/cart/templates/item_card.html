@@ -1,10 +1,10 @@
 <div class="col-4">
-    <a href="{% url 'shopwindow:detail' product.id %}">
+    <a href="{% url 'shopwindow:detail' cart_item.product_id %}">
         <div class="card mb-3">
-            <img class="card-img-top" src="{{product.image.thumb_url}}" alt="" >
+            <img class="card-img-top" src="{{cart_item.product.image.thumb_url}}" alt="" >
             <div class="card-body">
-                <h4 class="card-title">{{product}}</h4>
-                <p class="card-text">{{product.user_quantity}}개</p>
+                <h4 class="card-title">{{ cart_item }}</h4>
+                <p class="card-text">{{ cart_item.quantity}}개</p>
             </div>
         </div>
     </a>

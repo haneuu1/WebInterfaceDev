@@ -1,13 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'base_mypage.html' %}
 {% block title %}- Registration Done{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-8 panel panel-default">
-            <div class="alert alert-info">Registration Success. Welcome, {{new_user.username}}</div>
-            <a class="btn btn-info" href="/">Move to main</a>
-        </div>
-        <div class="col-md-2"></div>
+<h3 class="h3 mb-3 font-weight-normal" style="text-align: center"><i class="fas fa-user-plus"></i> 회원가입</h3>
+<div class="form-group">
+    <div class="offset-sm-3 col-sm-6">
+        <div class="alert" style="text-align: center;">Registration Success. Welcome, {{new_user.username}}</div>
+        <a class="btn btn-dark btn-block" href="{% url 'accounts:login'%}"><i class="fas fa-sign-in-alt"></i> 로그인</a>
     </div>
+</div>
 {% endblock %}
