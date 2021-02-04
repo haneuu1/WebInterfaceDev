@@ -21,6 +21,15 @@ class ProductLV(ListView):
 class ProductDV(DetailView):
     model = Product
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        quantity_list = []
+        for i in range(1, product.quantity) :
+            quantity_list.append(i)
+        context['quantity_list'] = quantity_list
+        return context
+
 class Productcategory(ListView):
     template_name = 'shopwindow/product_category_list.html'
 
