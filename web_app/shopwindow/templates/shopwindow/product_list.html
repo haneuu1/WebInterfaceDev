@@ -1,0 +1,23 @@
+{% extends "base_category.html" %}
+{% block title %}product_list.html{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div class="card-deck">
+        {% for product in object_list %}
+            {% include "product_card.html" %}
+        {% endfor %}
+    </div>
+
+    <br>
+    {% include "pagination.html" %}
+
+</div>
+<!-- 
+
+<img src="/media/photo/user_상품 1/image.thumb.jpg" style="width: 100%;">
+
+-->
+
+{% endblock %}

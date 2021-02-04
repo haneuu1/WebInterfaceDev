@@ -1,0 +1,12 @@
+<div class="col-4">
+    <a href="{% url 'shopwindow:detail' product.id %}">
+        <div class="card mb-3">
+            <img class="card-img-top" src="{{product.image.thumb_url}}" alt="" >
+            <div class="card-body">
+                <h4 class="card-title">{{product.name}}</h4>
+                <p class="card-text">{{product.price}}원</p>
+                <p class="card-text">{{product.description}}</p>
+            </div>
+        </div>
+    </a>
+</div>
