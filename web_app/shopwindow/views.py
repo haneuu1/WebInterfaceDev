@@ -8,15 +8,15 @@ class ProductLV(ListView):
     model = Product
     paginate_by = 6
 
-    def get_queryset(self):
-        return Product.objects.category.all()
+    # def get_queryset(self):
+    #     return Product.objects.category.all()
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['category'] = self.kwargs['category']
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['category'] = self.kwargs['category']
 
 
-        return context
+    #     return context
 
 class ProductDV(DetailView):
     model = Product
