@@ -1,0 +1,19 @@
+{% extends "base_mypage.html" %}
+{% block title %}product_detail.html{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    <div class="card-deck">
+        {% if object_list %}
+            {% for product in object_list %}
+                {% include "item_card.html" %}
+            {% endfor %}
+        {% endif %}
+    </div>
+
+    <br>
+
+</div>
+
+{% endblock %}
