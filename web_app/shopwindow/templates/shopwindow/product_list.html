@@ -5,9 +5,13 @@
 <div class="container">
 
     <div class="card-deck">
-        {% for product in object_list %}
-            {% include "product_card.html" %}
-        {% endfor %}
+        {% if object_list %}
+            {% for product in object_list %}
+                {% include "product_card.html" %}
+            {% endfor %}
+        {% elif search_term %}
+            <b>{{ search_term }}의 검색결과가 존재하지 않습니다!</b>
+        {% endif %}
     </div>
 
     <br>
