@@ -13,6 +13,9 @@ class Order(models.Model):
     order_date = models.DateTimeField("date ordered", auto_now_add=True)
     order_status = models.CharField(max_length=50)
 
+    class Meta:
+        ordering = ('-order_date',) 
+
     def __str__(self):
         own = self.owner.username
         prodcut_name = self.product.name

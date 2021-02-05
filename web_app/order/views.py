@@ -27,13 +27,14 @@ class OrderVW(View,AccessMixin):
             self.handle_no_permission()
             return redirect(reverse('shopwindow:index'))
 
-
+        product_quantity = list(map(int,request.POST['user_select_quantity']))
+        print("quant :",product_quantity)
         product_ids = list(request.POST['product_id'])
         product_ids.append(1)
         products = []
         for product_id in product_ids:
             product = get_object_or_404(Product,pk=product_id)
-            product.quantity = 1
+            product.quantity = product_quantity[0]
             products.append(product)
         # 수량은 이후에 받아서 업데이트 시켜야 함
         context = dict()
@@ -71,4 +72,11 @@ class OrderDone(ListView):
     model = Order
     template_name = 'order/create_order.html'
 
+
+    def get_queryset(self):
+        super().get_queryset()
+
+        newest_order = Order.objects.filter(owner = self.request.user)[0]
+        print(newest_order.order_date)
+    
 
