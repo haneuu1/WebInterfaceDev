@@ -77,5 +77,4 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     products = []
     for product in cart_items:
         products.append(product.product.pk)
-  
     return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter, products=products))
