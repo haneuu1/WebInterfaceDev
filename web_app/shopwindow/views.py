@@ -40,6 +40,9 @@ class ProductDV(DetailView):
         context['quantity_list'] = quantity_list
         return context
 
+    # def get_queryset(self):
+    #     return Review.objects.filter(tags__name=self.kwargs.get('tag'))
+
 class Productcategory(ListView):
     template_name = 'shopwindow/product_category_list.html'
 
