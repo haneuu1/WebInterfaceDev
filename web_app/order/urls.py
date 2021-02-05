@@ -10,6 +10,7 @@ urlpatterns = [
     # path('',views.index,name = 'index'),
     path('',OrderVW.as_view(),name='pre_order'),
     path('create/',CreateOrder.as_view(),name = 'create_order'),
+    path('result/',OrderDone.as_view(),name='result'),
 
     
 ]

@@ -2,6 +2,9 @@ from shopwindow.models import Product
 from order.models import Order
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View,ListView,DetailView,TemplateView
+from django.urls import reverse
+
+
 
 from django.contrib.auth.mixins import AccessMixin
 from django.views.defaults import permission_denied
@@ -22,7 +25,8 @@ class OrderVW(View,AccessMixin):
         ## 로그인 안한 상태 일때
         if not request.user.is_authenticated:
             self.handle_no_permission()
-            return redirect('../product/')
+            return redirect(reverse('shopwindow:index'))
+
 
         product_ids = list(request.POST['product_id'])
         product_ids.append(1)
@@ -40,9 +44,9 @@ class OrderVW(View,AccessMixin):
         return render(request,self.template_name,context)
 
 
-
 class CreateOrder(View):
     template_name = 'order/create_order.html'
+
 
     def post(self,request,*args,**kwargs):
         context = dict()
@@ -59,4 +63,12 @@ class CreateOrder(View):
             new_order = Order(owner = user, product=product, quantity=quantity,\
                 price = price, order_status = "Ordered")
             new_order.save()
-        return render(request,self.template_name,context)
+        
+        return redirect(reverse('order:result'))
+
+
+class OrderDone(ListView):
+    model = Order
+    template_name = 'order/create_order.html'
+
+
