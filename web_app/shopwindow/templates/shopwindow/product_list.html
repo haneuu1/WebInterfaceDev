@@ -1,19 +1,19 @@
 {% extends "base_category.html" %}
-{% block title %}product_list.html{% endblock %}
+{% block title %}product{% endblock %}
 {% block content %}
 
-<div class="container">
-
-    <div class="card-deck">
+<div class="card-deck">
+    {% if object_list %}
         {% for product in object_list %}
             {% include "product_card.html" %}
         {% endfor %}
-    </div>
-
-    <br>
-    {% include "pagination.html" %}
-
+    {% elif search_term %}
+        <b>{{ search_term }}의 검색결과가 존재하지 않습니다!</b>
+    {% endif %}
 </div>
+
+<br>
+{% include "pagination.html" %}
 <!-- 
 
 <img src="/media/photo/user_상품 1/image.thumb.jpg" style="width: 100%;">

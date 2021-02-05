@@ -1,184 +1,142 @@
-<!DOCTYPE html>
-<html lang="kr">
+{% extends "base_category.html" %}
+{% block title %}product{% endblock %}
+{% block content %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
-
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-    
-</head>
-
-<body>
-    {# 상품 정보 #}
-    <div class="container p-3 my-3 border">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
-                <h3>{{ object.name }}</h3>
-                <img src="{{ product.image.url }}" alt="product_img" width="50%">
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                <table>
-                    <tbody>
-                        <tr>
-                            <th>상품정보 요약</th>
-                            <td> {{ object.description }}</td>
-                        </tr>
-                        <tr style="color:CornflowerBlue">
-                            <th>판매가</th>
-                            <td> {{ object.price }} 원</td>
-                        </tr>
-                        <tr>
-                            <th>배송방법</th>
-                            <td> 택배</td>
-                        </tr>
-                        <tr>
-                            <th>배송비</th>
-                            <td>
-                                <strong>2,500원</strong>
-                                (30,000원 이상 구매시 무료)
-                            </td>
-                        </tr>
-                </table>
-            </div>
+{# 상품 정보 #}
+<div class="container p-3 my-3 border">
+    <div class="row">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+            <h3>{{ object.name }}</h3>
+            <img src="{{ product.image.url }}" alt="product_img" width="50%">
         </div>
-    </div>
-
-    {# 상품 수량과 금액 #}
-    <div class="container p-3 my-3">
-        {% if object.quantity > 0 %}
-            <table align="right" >
-                <tbody class="product_option">
-                    
-                    <tr class="total_quantity">
-                        <th>총 수량</th>
-                        <td>
-                            <select name="user_select_quantity">
-                                {% for quantity in quantity_list %}
-                                    <option value={{ quantity }}>{{ quantity }}</option>
-                                {% endfor %}
-                            </select>
-                        </td>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            <table>
+                <tbody>
+                    <tr>
+                        <th style="width: 35%;">상품정보 요약</th>
+                        <td> {{ object.description }}</td>
+                    </tr>
+                    <tr style="color:CornflowerBlue">
+                        <th>판매가</th>
+                        <td> {{ object.price }} 원</td>
                     </tr>
                     <tr>
-                        <th>총 상품금액</th>
-                        <td>{{ object.price }}</td>
-                        {{ user_quantity }}
+                        <th>배송방법</th>
+                        <td> 택배</td>
                     </tr>
-                </tbody>
-            </table>
-        {% else %}
-            <table align="right">
-                <tbody class="product_option">
-                    <tr class="total_quantity">
-                        <th>SOLD OUT</th>
+                    <tr>
+                        <th>배송비</th>
+                        <td>
+                            <strong>2,500원</strong>
+                            (30,000원 이상 구매시 무료)
+                        </td>
                     </tr>
-                </tbody>
             </table>
-        {% endif %}
+        </div>
     </div>
-    <br/>
+</div>
+
+
+{# 상품 수량과 금액 #}
+<div class="container p-3 my-3">
+    {% if object.quantity > 0 %}
+    <table align="right">
+        <tbody class="product_option">
+
+            <tr class="total_quantity">
+                <th>총 수량</th>
+                <td style="text-align: right;">
+                    <select name="user_select_quantity">
+                        {% for quantity in quantity_list %}
+                        <option value={{ quantity }}>{{ quantity }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>총 상품금액</th>
+                <td style="text-align: right;">{{ object.price }}</td>
+                {{ user_quantity }}
+            </tr>
+        </tbody>
+    </table>
+    {% else %}
+    <table align="right">
+        <tbody class="product_option">
+            <tr class="total_quantity">
+                <th>SOLD OUT</th>
+            </tr>
+        </tbody>
+    </table>
+    {% endif %}
+</div>
+<br />
+
 
     {# 구매 버튼 #}
     <div class="container p-3 my-3">
-        <a href="#" class="btn btn-dark btn-block" role="button">바로 구매하기</a>
+        <form action="{% url 'order:pre_order' %}" method="post">
+            {% csrf_token %}
+            {# 이후 구매 수량도 같이 받을수 있도록 바꾸어야함 #}
+            <input type="hidden" name = "product_id" value={{object.id}}>
+            <input class="btn btn-dark btn-block" type="submit" value= "바로 구매하기">
+        </form>
+
         <div class="btn-group btn-block">
             <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
             <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
         </div>
     </div>
-    {# 게시판 #}
-    <div class="container p-3 my-3" style="text-align:center">
-        <br/>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="nav-item">
-                <a class="nav-link active" href="#상세보기">상세보기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link text-black" href="#후기">상품후기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#qna">Q&A</a>
-            </li>
-        </ul>
-        
-        <span id="상세보기">
+
+
+{# 게시판 #}
+<div class="container p-3 my-3" style="text-align:center">
+    <ul class="nav nav-tabs nav-justified" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" data-toggle="tab" href="#상세보기">상세보기</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#후기">상품후기</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="tab" href="#qna">Q&A</a>
+        </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div id="상세보기" class="container tab-pane active"><br>
+            <p>상품 설명 적을 자리</p>
+            <p>상품 설명 적을 자리</p>
+            <p>상품 설명 적을 자리</p>
+            <p>상품 설명 적을 자리</p>
             <p>상품 설명 적을 자리</p>
             <img src="/static/detail.jpg" alt="상품상세 준비중">
-        </span>
-        <br/>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="nav-item">
-                <a class="nav-link" href="#상세보기">상세보기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link active" href="#후기">상품후기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#qna">Q&A</a>
-            </li>
-        </ul>
-        <span id="후기">
-            {# {% 후기.html %} #}
-            후기후기후기</span>
-        <br/>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="nav-item">
-                <a class="nav-link" href="#상세보기">상세보기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link" href="#후기">상품후기</a>
-            </li>
-            
-            <li class="nav-item">
-                <a class="nav-link active" href="#qna">Q&A</a>
-            </li>
-        </ul>
-        <span id="qna">
+        </div>
+        <div id="후기" class="container tab-pane fade"><br>
+            {% if user.is_active %}
+                <div class="text-right mr-3">
+                    <a href="{%url 'shopwindow:review_add' %}" class="btn btn-dark btn-sm">
+                        <i class="fas fa-pencil-alt"></i> 쓰기</a>
+                </div>
+            {% endif %}
+            {#{% include review_list.html %}#}
+            <p>후기목록쓰기</p>
+            <p>후기후기후기</p>
+            <p>후기후기후기</p>
+            <p>후기후기후기</p>
+            <p>후기후기후기</p>
+            <p>후기후기후기</p>
+        </div>
+        <div id="qna" class="container tab-pane fade"><br>
             {# {% qna.html %} #}
             질문들
             <p>질문질문질문</p>
             <p>질문질문질문</p>
             <p>질문질문질문</p>
             <p>질문질문질문</p>
-        </span>
+            <p>질문질문질문</p>
+        </div>
     </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
-
-    <span id="a">안녕하세요!</span>
-    
-</body>
-
-</html>
+</div>
+</div>
+{% endblock %}

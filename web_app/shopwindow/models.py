@@ -1,6 +1,8 @@
 from django.db import models
 from django.db.models.base import Model
+from django.contrib.auth.models import User
 from django.urls import reverse
+from tinymce.models import HTMLField
 
 
 from photo.fields import ThumbnailImageField
@@ -17,8 +19,6 @@ class Category(models.Model):
 
     def __str__(self):
         return self.subject
-
-
 
 
 class Product(models.Model):
@@ -48,3 +48,36 @@ class Product(models.Model):
             super().save(*args, **kwargs)
             self.image = temp_image
         super().save(*args, **kwargs)
+
+
+class Review(models.Model):
+    title = models.CharField(verbose_name='TITLE', max_length=50)
+    content = HTMLField('CONTENT')
+    create_dt = models.DateTimeField('CREATE DATE', auto_now_add=True)
+    modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                                verbose_name='OWNER', blank=True, null=True)
+    # 전체 상품 말고 주문한 상품으로 받아야 할 듯?
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+
+    class Meta:
+        ordering = ('-create_dt',) 
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return '' # reverse('shopwindows:review_add', args=(self.id,))
+    
+    # def get_success_url(self):
+    #     return reverse('offerta_create',args=(self.object.id,))
+
+    def get_previous(self):
+        return self.get_previous_by_create_dt()
+
+    def get_next(self):
+        return self.get_next_by_create_dt()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
