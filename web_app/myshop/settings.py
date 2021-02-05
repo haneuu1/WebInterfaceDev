@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'shopwindow',
     'photo',
     'accounts',
+    'order',
 
 ]
 
@@ -74,6 +75,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        # customtag를 사용하기 위한 추가부분
+        'libraries':{
+            'calc' : 'order.templates.calc'
+            }
         },
     },
 ]

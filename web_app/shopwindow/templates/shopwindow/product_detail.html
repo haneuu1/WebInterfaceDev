@@ -36,6 +36,7 @@
     </div>
 </div>
 
+
 {# 상품 수량과 금액 #}
 <div class="container p-3 my-3">
     {% if object.quantity > 0 %}
@@ -71,14 +72,22 @@
 </div>
 <br />
 
-{# 구매 버튼 #}
-<div class="container p-3 my-3">
-    <a href="#" class="btn btn-dark btn-block" role="button">바로 구매하기</a>
-    <div class="btn-group btn-block">
-        <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
-        <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
+
+    {# 구매 버튼 #}
+    <div class="container p-3 my-3">
+        <form action="{% url 'order:pre_order' %}" method="post">
+            {% csrf_token %}
+            {# 이후 구매 수량도 같이 받을수 있도록 바꾸어야함 #}
+            <input type="hidden" name = "product_id" value={{object.id}}>
+            <input class="btn btn-dark btn-block" type="submit" value= "바로 구매하기">
+        </form>
+
+        <div class="btn-group btn-block">
+            <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
+            <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
+        </div>
     </div>
-</div>
+
 
 {# 게시판 #}
 <div class="container p-3 my-3" style="text-align:center">
