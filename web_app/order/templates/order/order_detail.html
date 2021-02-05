@@ -1,0 +1,49 @@
+{% load calc %}
+구매 정보 확인
+
+<form action="{% url 'order:create_order' %}" method="post">
+    {% csrf_token %}
+    
+    <input type="hidden" name="user_id" value={{user.id}}>
+    <table class="table">
+        <tr>
+            <th colspan="2">구매자 정보</th>
+        </tr>
+        <tr>
+            <th>구매자 이름</th>
+            <th>{{user.username}}</th>
+
+        </tr>
+        <tr>
+            <th>구매자 이메일</th>
+            <th>{{user.email}}</th>
+
+        </tr>
+        <tr>
+            <th colspan="2">상품 정보</th>
+        </tr>
+        {% if products %}
+            {% for product in products %}
+                <tr>
+                    <th>상품 이름</th>
+                    <th>{{product.name}}</th>
+                </tr>
+                <tr>
+                    <th>상품 수량</th>
+                    <th>{{product.quantity}}</th>
+                </tr>
+                <tr>
+                    <th>가격</th>
+                    <th>{{product.price|multiply:product.quantity}}</th>
+                </tr>
+                
+                <input type="hidden" name="product_id" value={{product.id}}>
+                <input type="hidden" name="product_price" value={{product.price|multiply:product.quantity}}>
+                <input type="hidden" name="product_quantity" value={{product.quantity}}>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+
+    <input class="btn btn-success btn-block" type="submit" value="결제하기">
+</form>

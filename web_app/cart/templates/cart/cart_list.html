@@ -3,7 +3,7 @@
 {% block title %}cart.html{% endblock %}
 {% block content %}
 <h3 class="h3 m-5 font-weight-normal" style="text-align: center"><i class="fas fa-shopping-bag"></i> 장바구니</h3>
-
+{% load mathfilters %}
 {% if not cart_items %}
 <p class="mt-5" style="text-align: center;">장바구니에 담긴 상품이 없습니다.</p>
 {% else %}
@@ -33,7 +33,9 @@
                     {{ cart_item }}
                 </a>
             </td>
-            <td>{{ cart_item.quantity }} x {{ cart_item.product.price }}</td>
+            <td>
+                <p>{{ cart_item.quantity }} x {{ cart_item.product.price }}</p>
+                <p>{{ cart_item.quantity |mul:cart_item.product.price }}</p></td>
             <td>
                 <div class="btn-group">
                     <a href="{% url 'cart:minus_cart' cart_item.product.pk %}">
@@ -82,7 +84,10 @@
     </tbody>
 </table>
 <div class="offset-sm-4 col-sm-4 mb-5">
-    <button class="btn btn-dark btn-block" type="button" id="btn-pay">주문하기</button>
+
+    {% if not products %}
+    <a href="{% url 'order:pre_order' products %}" class="btn btn-dark btn-block" type="button" id="btn-pay">주문하기</a>
+    {% endif %}
 </div>
 </div>
 

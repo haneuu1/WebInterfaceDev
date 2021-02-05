@@ -40,11 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'widget_tweaks',
+    'tinymce',
     'mathfilters',
-    
+
     'shopwindow',
     'photo',
     'accounts',
+    'order',
     'cart',
 
 ]
@@ -75,6 +77,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        # customtag를 사용하기 위한 추가부분
+        'libraries':{
+            'calc' : 'order.templates.calc'
+            }
         },
     },
 ]

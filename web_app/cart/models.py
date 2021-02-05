@@ -29,3 +29,6 @@ class CartItem(models.Model):
 
     def sub_total(self):
         return self.product.price * self.quantity
+
+
+# pip install django-mathfilters 필요

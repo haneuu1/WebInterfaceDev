@@ -72,4 +72,10 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     for cart_item in cart_items:
         total += (cart_item.product.price * cart_item.quantity)
         counter += cart_item.quantity
-    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter))
+        
+    # products 장바구니에 있는 product_id 리스트
+    products = []
+    for product in cart_items:
+        products.append(product.product.pk)
+  
+    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter, products=products))
