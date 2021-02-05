@@ -9,6 +9,9 @@ from django.db.models.signals import post_save
 # Create your models here.
 class Cart(models.Model):
     user        = models.ForeignKey(User, on_delete=models.CASCADE)
+    
+    def __str__(self):
+        return str(self.id)
 
 @receiver(post_save, sender=User)
 def create_user_cart(sender, instance, created, **kwargs):

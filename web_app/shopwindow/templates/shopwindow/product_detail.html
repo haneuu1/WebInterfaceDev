@@ -54,9 +54,9 @@
                         </span>
                         <input class="form-control text-center" type="text" id="quantity" value="1" style="width: 1cm;">
                         <span class="input-group-prepend">
-                            <button class="btn btn-outline-success plus-cart-button" type="submit">
+                            <a class="btn btn-outline-success plus-cart-button" href="#" type="submit">
                                 <i class="fas fa-plus"></i>
-                            </button>
+                            </a>
                         </span>
                     </form>
 
@@ -85,7 +85,7 @@
 <div class="container p-3 my-3">
     <a href="#" class="btn btn-dark btn-block" role="button">바로 구매하기</a>
     <div class="btn-group btn-block">
-        <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
+        <a href="{% url 'cart:plus_cart' product.pk %}" class="btn btn-outline-dark" value="add_cart">장바구니</a>
         <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
     </div>
 </div>

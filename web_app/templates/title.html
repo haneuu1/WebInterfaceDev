@@ -60,7 +60,7 @@
 
     <!-- 장바구니 / 마이페이지 / 로그인 아이콘 -->
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i> 장바구니</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'cart:cart_detail' %}"><i class="fas fa-shopping-bag"></i> 장바구니</a></li>
         <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-user"></i> 마이페이지</a></li>
         {% if user.is_authenticated %}
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
