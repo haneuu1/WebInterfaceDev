@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'photo',
     'accounts',
     'order',
-    'cart',
     'mypage',
 
 ]
