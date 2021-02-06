@@ -1,14 +1,36 @@
-{% load calc %}
-구매 정보 확인
+{% extends "base_mypage.html" %}
+{% block title %}order{% endblock %}
+{% block content %}
 
+{% load calc %}
 <form action="{% url 'order:create_order' %}" method="post">
 
     {% include "order/order_table.html" %}
 
-        </tr>
-        <tr>
-            <th>구매자 이메일</th>
-            <th>{{user.email}}</th>
+    <table class="table table-hover table-sm my-5">
+        <thead>
+            <tr>
+                <th style="width: 30%;">
+                    <h4>구매자 정보</h4>
+                </th>
+                <td style="width: 70%;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>이름</th>
+                <td>{{user.username}}</td>
+            </tr>
+            <tr>
+                <th>휴대폰</th>
+                <td>로그인정보</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td>{{user.email}}</td>
+            </tr>
+        </tbody>
+    </table>
 
     <table class="table table-hover table-sm my-5">
         <thead>
@@ -18,7 +40,7 @@
                 </th>
                 <!-- 구매자 정보 받아오기 -->
                 <td style="width: 70%; text-align: right;">
-                    <div class="btn btn-dark btn-sm">구매자와 동일</div>
+                    <button class="btn btn-dark btn-sm">구매자와 동일</button>
                 </td>
             </tr>
         </thead>

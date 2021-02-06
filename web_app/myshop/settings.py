@@ -41,12 +41,14 @@ INSTALLED_APPS = [
 
     'widget_tweaks',
     'tinymce',
+    'mathfilters',
 
     'shopwindow',
     'photo',
     'accounts',
     'order',
     'mypage',
+    'cart',
 
 ]
 
