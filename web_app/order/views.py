@@ -4,8 +4,6 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View,ListView,DetailView,TemplateView
 from django.urls import reverse
 
-
-
 from django.contrib.auth.mixins import AccessMixin
 from django.views.defaults import permission_denied
 
@@ -18,14 +16,14 @@ class OrderVW(View,AccessMixin):
     permission_denied_message = "You must login before buy something"
 
     def get(self,request,*args,**kwargs):
-
-        return render(request,self.template_name,{})
+        
+        return redirect(self.get_login_url())
 
     def post(self,request,*args,**kwargs):
         ## 로그인 안한 상태 일때
         if not request.user.is_authenticated:
             self.handle_no_permission()
-            return redirect(reverse('shopwindow:index'))
+            return redirect(self.get_login_url())
 
         product_quantity = list(map(int,request.POST['user_select_quantity']))
         print("quant :",product_quantity)
@@ -36,7 +34,7 @@ class OrderVW(View,AccessMixin):
             product = get_object_or_404(Product,pk=product_id)
             product.quantity = product_quantity[0]
             products.append(product)
-        # 수량은 이후에 받아서 업데이트 시켜야 함
+        # 수량은 이후에 받아서 업데이트 시켜야 함  --> 시킴
         context = dict()
         context['user']=request.user
         context['products']=products
@@ -45,9 +43,8 @@ class OrderVW(View,AccessMixin):
         return render(request,self.template_name,context)
 
 
-class CreateOrder(View):
+class CreateOrderVW(View):
     template_name = 'order/create_order.html'
-
 
     def post(self,request,*args,**kwargs):
         context = dict()
@@ -55,23 +52,37 @@ class CreateOrder(View):
         product_ids = self.request.POST.getlist('product_id')
         product_prices = self.request.POST.getlist('product_price')
         product_quantity = self.request.POST.getlist('product_quantity')
+        order_set_num = -1
         print("user",user)
         print("id",product_ids)
         print("price",product_prices)
         print("qu",product_quantity)
         for id,price,quantity in zip(product_ids,product_prices,product_quantity):
+            # 새로운 주문 생성
             product = get_object_or_404(Product,pk=id)
             new_order = Order(owner = user, product=product, quantity=quantity,\
                 price = price, order_status = "Ordered")
             new_order.save()
+
+            # 주문세트의 번호 설정(첫번째 주문의 pk로 전부 설정)
+            if order_set_num == -1:
+                order_set_num = new_order.pk
+            new_order.order_set= order_set_num
+            new_order.save()
+            print(new_order.pk)
         
         return redirect(reverse('order:result'))
 
 
-class OrderDone(ListView):
+class OrderDone(ListView,AccessMixin):
     model = Order
     template_name = 'order/create_order.html'
 
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            self.handle_no_permission()
+            return redirect(self.get_login_url())
+        return super().get(request,*args,**kwargs)
 
     def get_queryset(self):
         super().get_queryset()
@@ -79,4 +90,20 @@ class OrderDone(ListView):
         newest_order = Order.objects.filter(owner = self.request.user)[0]
         print(newest_order.order_date)
     
+class OrderCancel(View,AccessMixin):
 
+    def get(self,request,*args,**kwargs):
+        if not request.user.is_authenticated:
+            self.handle_no_permission()
+            return redirect(self.get_login_url())
+
+        return redirect(reverse('mypage:myorder'))
+
+    def post(self,request,*args,**kwargs):
+        cancel_order_pk = request.POST['cancel_order_pk']
+        target_order = get_object_or_404(Order,pk=cancel_order_pk)
+        target_order.order_status = "Canceled"
+        target_order.save()
+
+        return redirect(reverse('mypage:myorder'))
+    

@@ -64,6 +64,8 @@
                 </tr>
             </tbody>
         </table>
+        <input type="hidden" name="product_id" value={{object.id}}>
+        <input class="btn btn-dark btn-block" type="submit" value="바로 구매하기">
         {% else %}
         <table align="right">
             <tbody class="product_option">
@@ -73,8 +75,6 @@
             </tbody>
         </table>
         {% endif %}
-        <input type="hidden" name="product_id" value={{object.id}}>
-        <input class="btn btn-dark btn-block" type="submit" value="바로 구매하기">
     </form>
     <div class="btn-group btn-block">
         <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>

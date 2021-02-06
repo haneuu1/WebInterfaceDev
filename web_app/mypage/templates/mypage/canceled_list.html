@@ -1,0 +1,34 @@
+{% extends "base_category.html" %}
+{% block title %}product{% endblock %}
+{% block content %}
+
+<div class="container">
+
+    {% if object_list %}
+        <b>{{ user }}의 주문취소내역 입니다</b>
+        {% for order in object_list %}
+            <p>=============================================</p>
+            {{order.product.name}}    
+            {{order.owner.username}}
+            {{order.quantity}}
+            {{order.price}}
+            {{order.modify_dt|date:"Y/m/d H:i"}}
+            <br> 
+
+            <p>=============================================</p>
+
+        {% endfor %}
+    {% else %}
+        <b>{{ user }}의 주문취소내역이 존재하지 않습니다!</b>
+    {% endif %}
+</div>
+
+<br>
+{% include "pagination.html" %}
+<!-- 
+
+<img src="/media/photo/user_상품 1/image.thumb.jpg" style="width: 100%;">
+
+-->
+
+{% endblock %}
