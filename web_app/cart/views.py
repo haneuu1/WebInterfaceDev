@@ -13,15 +13,13 @@ from django.contrib.auth import *
 
 def _cart_id(request):
     cart = Cart.objects.get(user_id=request.user)
-    # request.session['cart_id']= cart.id
-    # print(request.session['user'])
     if not cart:
         cart = request.session.create()
     return cart.id
 
 # 장바구니에 추가.. 수량 1로 고정. 
 # product_detail 장바구니 버튼에 적용 고민.....
-def plus_cart(request, product_id):
+def plus_cart(request, product_id, user_select_quantity=1):
     product = Product.objects.get(id=product_id)
     try:
         cart = Cart.objects.get(id=_cart_id(request))
@@ -35,7 +33,7 @@ def plus_cart(request, product_id):
         cart_item = CartItem.objects.get(product=product, cart=cart)
         # 재고 고려
         if cart_item.quantity < cart_item.product.quantity:
-            cart_item.quantity += 1
+            cart_item.quantity += user_select_quantity
         else:
             pass #재고가 없습니다
         cart_item.save()
@@ -75,6 +73,9 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
         
     # products 장바구니에 있는 product_id 리스트
     products = []
+    quantities = []
     for product in cart_items:
         products.append(product.product.pk)
+        quantities.append(product.quantity)
+    print(quantities)
     return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter, products=products))
