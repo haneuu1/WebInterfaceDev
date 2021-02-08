@@ -1,16 +1,14 @@
 from django.http.response import HttpResponse
-
-from django.views.generic import ListView, DetailView
-from django.views.generic import DeleteView
-from django.http import HttpResponse
 from django.urls import reverse_lazy
-
 from django.shortcuts import render, redirect, get_object_or_404
-from shopwindow.models import Product
-from cart.models import Cart, CartItem
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import *
+from django.contrib.auth.decorators import login_required
 
+from shopwindow.models import Product
+from cart.models import Cart, CartItem
+
+@login_required
 def _cart_id(request):
     cart = Cart.objects.get(user_id=request.user)
     if not cart:
@@ -19,6 +17,7 @@ def _cart_id(request):
 
 # 장바구니에 추가.. 수량 1로 고정. 
 # product_detail 장바구니 버튼에 적용 고민.....
+@login_required
 def plus_cart(request, product_id, user_select_quantity=1):
     product = Product.objects.get(id=product_id)
     try:
@@ -64,6 +63,7 @@ def remove_cart(request, product_id):
     cart_item.delete()
     return redirect('cart:cart_detail')
 
+@login_required
 def cart_detail(request, total=0, counter=0, cart_items=None):
     cart = Cart.objects.get(id=_cart_id(request))
     cart_items = CartItem.objects.filter(cart=cart, active=True)
@@ -71,11 +71,4 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
         total += (cart_item.product.price * cart_item.quantity)
         counter += cart_item.quantity
         
-    # products 장바구니에 있는 product_id 리스트
-    products = []
-    quantities = []
-    for product in cart_items:
-        products.append(product.product.pk)
-        quantities.append(product.quantity)
-    print(quantities)
-    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter, products=products))
+    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter))
