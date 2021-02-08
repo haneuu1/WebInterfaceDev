@@ -87,11 +87,6 @@
     </tbody>
 </table>
 <div class="offset-sm-4 col-sm-4 mb-5">
-    {# <a href="{% url 'order:pre_order' products %}" class="btn btn-dark btn-block" method="POST" id="btn-pay">주문하기</a> #}
-    {% for cart_item in cart_items %}
-    {{cart_item.product.pk}}
-    {{cart_item.quantity}}
-    {% endfor %}
     <form action="{% url 'order:pre_order' %}" method="post">
         {% csrf_token %}
         {% for cart_item in cart_items %}
