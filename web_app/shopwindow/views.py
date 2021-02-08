@@ -94,7 +94,7 @@ class SearchFormView(FormView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     template_name = 'shopwindow/review_form.html'
-    fields = ['title', 'content', 'product']
+    fields = ['title', 'product', 'content']
     # initial = {'title':'title', 'content':'content'}
     
     def form_valid(self, form):
