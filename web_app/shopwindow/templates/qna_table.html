@@ -1,0 +1,29 @@
+<table class="table table-hover table-sm my-5 offset-sm-3 col-sm-6">
+    <thead>
+        <tr>
+            <td style="text-align: right;">
+                {{qna.create_dt|date:"Y-m-d"}}
+            </td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="text-align:left">
+                {{qna.title}}
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                {{qna.content | linebreaks}}
+            </td>
+        </tr>
+        <tr>
+            <td style="text-align: right;">
+                <a href="{%url 'shopwindow:QnA_update' qna.id %}">
+                    <i class="far fa-edit"></i> 수정</a>
+                <a href="{%url 'shopwindow:QnA_delete' qna.id %}" class="text-danger">
+                    <i class="fas fa-trash"></i> 삭제</a>
+            </td>
+        </tr>
+    </tbody>
+</table>

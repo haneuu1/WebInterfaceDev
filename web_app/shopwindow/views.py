@@ -10,7 +10,7 @@ from django.shortcuts import render
 from myshop.views import OwnerOnlyMixin
 
 from shopwindow.forms import ProductSearchForm
-from shopwindow.models import Review
+from shopwindow.models import *
 
 
 
@@ -30,6 +30,7 @@ class ProductLV(ListView):
 
 class ProductDV(DetailView):
     model = Product
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -38,10 +39,11 @@ class ProductDV(DetailView):
         for i in range(1, product.quantity) :
             quantity_list.append(i)
         context['quantity_list'] = quantity_list
+        context['reviews'] = Review.objects.all()
+        context['qnas'] = QuestionAnswer.objects.all()
+
         return context
 
-    # def get_queryset(self):
-    #     return Review.objects.filter(tags__name=self.kwargs.get('tag'))
 
 class Productcategory(ListView):
     template_name = 'shopwindow/product_category_list.html'
@@ -55,8 +57,14 @@ class Productcategory(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['category'] = self.kwargs['category']
+        context['categories'] = Category.objects.all()
 
         return context
+
+class CategoryLV(ListView):
+    template_name = 'shopwindow/../templates/category_bar.html'
+    model = Category
+
 
 class ReviewLV(ListView):
     model = Review
@@ -96,14 +104,47 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('shopwindow:detail',args=(self.object.product.id,))
 
-
- 
-
 class ReviewUpdateView(OwnerOnlyMixin, UpdateView):
     model = Review
-    fields = ['title', 'content']
-    success_url = reverse_lazy('shopwindow:detail')
+    fields = ['title', 'content', 'product']
+    # success_url = reverse_lazy('shopwindow:index')
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.product.id,))
 
 class ReviewDeleteView(OwnerOnlyMixin, DeleteView) :
     model = Review
-    success_url = reverse_lazy('shopwindow:detail')
+    # success_url = reverse_lazy('shopwindow:index')
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.product.id,))
+
+
+#--- FormView, Q&A
+class QACreateView(LoginRequiredMixin, CreateView):
+    model = QuestionAnswer
+    template_name = 'shopwindow/qna_form.html'
+    fields = ['title', 'content', 'product']
+    # initial = {'title':'title', 'content':'content'}
+    
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.product.id,))
+
+class QAUpdateView(OwnerOnlyMixin, UpdateView):
+    model = QuestionAnswer
+    fields = ['title', 'content', 'product']
+    # success_url = reverse_lazy('shopwindow:index')
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.product.id,))
+
+class QADeleteView(OwnerOnlyMixin, DeleteView) :
+    model = QuestionAnswer
+    # success_url = reverse_lazy('shopwindow:index')
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.product.id,))
