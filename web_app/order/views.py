@@ -38,7 +38,6 @@ class OrderVW(View,AccessMixin):
         context = dict()
         context['user']=request.user
         context['products']=products
-        print(context)
 
         return render(request,self.template_name,context)
 
@@ -53,23 +52,24 @@ class CreateOrderVW(View):
         product_prices = self.request.POST.getlist('product_price')
         product_quantity = self.request.POST.getlist('product_quantity')
         order_set_num = -1
-        print("user",user)
-        print("id",product_ids)
-        print("price",product_prices)
-        print("qu",product_quantity)
+        # print("order check")
+        # print("user",user)
+        # print("id",product_ids)
+        # print("price",product_prices)
+        # print("qu",product_quantity)
+        # print("order check end")
         for id,price,quantity in zip(product_ids,product_prices,product_quantity):
             # 새로운 주문 생성
             product = get_object_or_404(Product,pk=id)
             new_order = Order(owner = user, product=product, quantity=quantity,\
                 price = price, order_status = "Ordered")
-            new_order.save()
+            new_order.save() # db 에 저장 해야만 pk를 알수있음
 
             # 주문세트의 번호 설정(첫번째 주문의 pk로 전부 설정)
             if order_set_num == -1:
                 order_set_num = new_order.pk
             new_order.order_set= order_set_num
             new_order.save()
-            print(new_order.pk)
         
         return redirect(reverse('order:result'))
 
@@ -85,10 +85,20 @@ class OrderDone(ListView,AccessMixin):
         return super().get(request,*args,**kwargs)
 
     def get_queryset(self):
-        super().get_queryset()
-
         newest_order = Order.objects.filter(owner = self.request.user)[0]
-        print(newest_order.order_date)
+        # print(">",newest_order.order_set)
+        # print(">",Order.objects.filter(order_set = newest_order.order_set))
+        return Order.objects.filter(order_set = newest_order.order_set)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['orderDone_list'] = self.get_queryset()
+        # print(context['orderDone_list'])
+        return context
+
+
+
+
     
 class OrderCancel(View,AccessMixin):
 

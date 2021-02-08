@@ -6,6 +6,22 @@
 <div class="form-group">
     <div class="offset-sm-3 col-sm-6">
         <div class="alert" style="text-align: center;">결제가 완료되었습니다.</div>
+
+        {#  추가 부분  ㄱ#}
+        {% if orderDone_list  %}
+            <p>주문 상품</p>
+            <p>============================================</p>
+            {% for order in orderDone_list %}
+                <p>상품명 : {{order.product.name}}, 상품 수 : {{order.quantity}}</p>
+            {% endfor %}
+            <p>============================================</p>
+        {% else %}
+            <p>ERROR : 주문 내역이 없습니다!</p>
+        {% endif %}
+
+        {#ㄴ 추가 부분  #}
+
+
         <a class="btn btn-dark btn-block" href="{% url 'mypage:mypage' %}"><i class="far fa-user"></i> 마이페이지</a>
     </div>
 </div>
