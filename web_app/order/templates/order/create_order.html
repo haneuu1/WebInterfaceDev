@@ -7,21 +7,34 @@
     <div class="offset-sm-3 col-sm-6">
         <div class="alert" style="text-align: center;">결제가 완료되었습니다.</div>
 
-        {#  추가 부분  ㄱ#}
         {% if orderDone_list  %}
-            <p>주문 상품</p>
-            <p>============================================</p>
-            {% for order in orderDone_list %}
-                <p>상품명 : {{order.product.name}}, 상품 수 : {{order.quantity}}</p>
-            {% endfor %}
-            <p>============================================</p>
+        <table class="table table-hover table-sm">
+            <thead class="thead-light">
+                <tr>
+                    <th style="width: 50%;">결제 목록</th>
+                    <th style="width: 15%;">주문금액</th>
+                    <th style="width: 15%;">수량</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orderDone_list %}
+                <tr>
+                    <td>
+                        <a href="{% url 'shopwindow:detail' order.product.id %}">
+                            <img width="30%" src="{{order.product.image.thumb_url}}" alt="상품사진">
+                            {{order.product.name}}
+                        </a>
+                    </td>
+                    <td>{{order.price}}</td>
+                    <td>{{order.quantity}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
         {% else %}
-            <p>ERROR : 주문 내역이 없습니다!</p>
+        <div class="mb-5" style="text-align: center;">ERROR : 주문 내역이 없습니다!</div>
         {% endif %}
-
-        {#ㄴ 추가 부분  #}
-
-
+        
         <a class="btn btn-dark btn-block" href="{% url 'mypage:mypage' %}"><i class="far fa-user"></i> 마이페이지</a>
     </div>
 </div>
