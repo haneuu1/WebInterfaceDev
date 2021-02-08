@@ -25,14 +25,15 @@ class OrderVW(View,AccessMixin):
             self.handle_no_permission()
             return redirect(self.get_login_url())
 
-        product_quantity = list(map(int,request.POST['user_select_quantity']))
+        product_quantity = list(map(int,request.POST.getlist('user_select_quantity')))
         print("quant :",product_quantity)
-        product_ids = list(request.POST['product_id'])
+        product_quantity.append(1)
+        product_ids = list(request.POST.getlist('product_id'))
         product_ids.append(1)
         products = []
-        for product_id in product_ids:
+        for product_id,quantity in zip(product_ids,product_quantity):
             product = get_object_or_404(Product,pk=product_id)
-            product.quantity = product_quantity[0]
+            product.quantity = quantity
             products.append(product)
         # 수량은 이후에 받아서 업데이트 시켜야 함  --> 시킴
         context = dict()
