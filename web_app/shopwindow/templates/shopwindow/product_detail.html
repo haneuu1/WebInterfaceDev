@@ -3,7 +3,7 @@
 {% block content %}
 <body onload="init();">
     <script language="JavaScript">
-        <!--
+        
         var sell_price;
         var user_select_quantity;
         
@@ -40,7 +40,7 @@
                 }
             sum.value = parseInt(hm.value) * sell_price;
         }  
-        //-->
+        
     </script>
 {# 상품 정보 #}
 <div class="container p-3 my-3 border">
@@ -182,7 +182,9 @@
             {% if qnas %}
                 {% for qna in qnas %}
                     {% if user == qna.owner %}
+                        {% if qna.product.id == object.id %}
                         {% include "qna_table.html" %}
+                        {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
