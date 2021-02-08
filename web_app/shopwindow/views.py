@@ -136,6 +136,7 @@ class QACreateView(LoginRequiredMixin, CreateView):
 
 class QAUpdateView(OwnerOnlyMixin, UpdateView):
     model = QuestionAnswer
+    template_name = 'shopwindow/qna_form.html'
     fields = ['title', 'content', 'product']
     # success_url = reverse_lazy('shopwindow:index')
 
@@ -144,6 +145,7 @@ class QAUpdateView(OwnerOnlyMixin, UpdateView):
 
 class QADeleteView(OwnerOnlyMixin, DeleteView) :
     model = QuestionAnswer
+    template_name = 'shopwindow/qna_confirm_delete.html'
     # success_url = reverse_lazy('shopwindow:index')
 
     def get_success_url(self):
