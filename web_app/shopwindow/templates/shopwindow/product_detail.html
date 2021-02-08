@@ -1,7 +1,47 @@
 {% extends "base_category.html" %}
 {% block title %}product{% endblock %}
 {% block content %}
-
+<body onload="init();">
+    <script language="JavaScript">
+        <!--
+        var sell_price;
+        var user_select_quantity;
+        
+        function init () {
+            sell_price = document.form.sell_price.value;
+            user_select_quantity = document.form.user_select_quantity.value;
+            document.form.sum.value = sell_price;
+            change();
+        }
+        
+        function add () {
+            hm = document.form.user_select_quantity;
+            sum = document.form.sum;
+            hm.value ++ ;
+        
+            sum.value = parseInt(hm.value) * sell_price;
+        }
+        
+        function del () {
+            hm = document.form.user_select_quantity;
+            sum = document.form.sum;
+                if (hm.value > 1) {
+                    hm.value -- ;
+                    sum.value = parseInt(hm.value) * sell_price;
+                }
+        }
+        
+        function change () {
+            hm = document.form.user_select_quantity;
+            sum = document.form.sum;
+        
+                if (hm.value < 0) {
+                    hm.value = 0;
+                }
+            sum.value = parseInt(hm.value) * sell_price;
+        }  
+        //-->
+    </script>
 {# 상품 정보 #}
 <div class="container p-3 my-3 border">
     <div class="row">
@@ -40,26 +80,25 @@
 {# 상품 수량과 금액 #}
 {# 구매 버튼 #}
 <div class="container p-3 my-3">
-    <form action="{% url 'order:pre_order' %}" method="post">
+    <form action="{% url 'order:pre_order' %}" method="post" name="form">
         {% csrf_token %}
 
         {% if object.quantity > 0 %}
         <table align="right">
             <tbody class="product_option">
-
                 <tr class="total_quantity">
                     <th>총 수량</th>
                     <td style="text-align: right;">
-                        <select name="user_select_quantity">
-                            {% for quantity in quantity_list %}
-                            <option value={{ quantity }}>{{ quantity }}</option>
-                            {% endfor %}
-                        </select>
+                    <input type=hidden name="sell_price" value="{{object.price}}">
+                        <input type="button" value=" - " onclick="del();">
+                        <input type="text" name="user_select_quantity" value="1" size="1" onchange="change();">
+                        <input type="button" value=" + " onclick="add();">
                     </td>
                 </tr>
                 <tr>
                     <th>총 상품금액</th>
-                    <td style="text-align: right;">{{ object.price }}</td>
+                    <td style="text-align: right;">
+                        <input type="text" name="sum" size="9" readonly> 원</td>
                 </tr>
             </tbody>
         </table>
@@ -153,4 +192,5 @@
     </div>
 </div>
 </div>
+</body>
 {% endblock %}
