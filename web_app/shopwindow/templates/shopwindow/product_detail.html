@@ -73,20 +73,20 @@
 <br />
 
 
-    {# 구매 버튼 #}
-    <div class="container p-3 my-3">
-        <form action="{% url 'order:pre_order' %}" method="post">
-            {% csrf_token %}
-            {# 이후 구매 수량도 같이 받을수 있도록 바꾸어야함 #}
-            <input type="hidden" name = "product_id" value={{object.id}}>
-            <input class="btn btn-dark btn-block" type="submit" value= "바로 구매하기">
-        </form>
+{# 구매 버튼 #}
+<div class="container p-3 my-3">
+    <form action="{% url 'order:pre_order' %}" method="post">
+        {% csrf_token %}
+        {# 이후 구매 수량도 같이 받을수 있도록 바꾸어야함 #}
+        <input type="hidden" name="product_id" value={{object.id}}>
+        <input class="btn btn-dark btn-block" type="submit" value="바로 구매하기">
+    </form>
 
-        <div class="btn-group btn-block">
-            <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
-            <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
-        </div>
+    <div class="btn-group btn-block">
+        <button type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</button>
+        <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
     </div>
+</div>
 
 
 {# 게시판 #}
@@ -112,29 +112,49 @@
             <p>상품 설명 적을 자리</p>
             <img src="/static/detail.jpg" alt="상품상세 준비중">
         </div>
+
+        <!-- 후기 -->
         <div id="후기" class="container tab-pane fade"><br>
             {% if user.is_active %}
-                <div class="text-right mr-3">
-                    <a href="{%url 'shopwindow:review_add' %}" class="btn btn-dark btn-sm">
-                        <i class="fas fa-pencil-alt"></i> 쓰기</a>
-                </div>
+            <div class="text-right mr-3">
+                <a href="{%url 'shopwindow:review_add' %}" class="btn btn-dark btn-sm">
+                    <i class="fas fa-pencil-alt"></i> 작성</a>
+            </div>
             {% endif %}
-            {#{% include review_list.html %}#}
-            <p>후기목록쓰기</p>
-            <p>후기후기후기</p>
-            <p>후기후기후기</p>
-            <p>후기후기후기</p>
-            <p>후기후기후기</p>
-            <p>후기후기후기</p>
+
+            {% if reviews %}
+                {% for review in reviews %}
+                    {% if review.product.id == object.id %}
+                        {% include "review_table.html" %}
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+            <div style="text-align: center;">
+                후기가 없습니다.
+            </div>
+            {% endif %}
+
+            {% include "pagination.html" %}
         </div>
+
+        <!-- Q&A / 자기 질문만 보이기 -->
         <div id="qna" class="container tab-pane fade"><br>
-            {# {% qna.html %} #}
-            질문들
-            <p>질문질문질문</p>
-            <p>질문질문질문</p>
-            <p>질문질문질문</p>
-            <p>질문질문질문</p>
-            <p>질문질문질문</p>
+            {% if user.is_active %}
+            <div class="text-right mr-3">
+                <a href="{%url 'shopwindow:QnA_add' %}" class="btn btn-dark btn-sm">
+                    <i class="fas fa-pencil-alt"></i> 질문하기</a>
+            </div>
+            {% endif %}
+
+            {% if qnas %}
+                {% for qna in qnas %}
+                    {% if user == qna.owner %}
+                        {% include "qna_table.html" %}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% include "pagination.html" %}
         </div>
     </div>
 </div>
