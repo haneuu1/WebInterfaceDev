@@ -1,6 +1,7 @@
 {% extends "base_category.html" %}
 {% block title %}product{% endblock %}
 {% block content %}
+{% load humanize %}
 <body onload="init();">
     <script language="JavaScript">
         
@@ -58,7 +59,7 @@
                     </tr>
                     <tr style="color:CornflowerBlue">
                         <th>판매가</th>
-                        <td> {{ object.price }} 원</td>
+                        <td> {{ object.price |intcomma }} 원</td>
                     </tr>
                     <tr>
                         <th>배송방법</th>

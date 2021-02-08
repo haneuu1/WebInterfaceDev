@@ -27,9 +27,9 @@ class OrderVW(View,AccessMixin):
 
         product_quantity = list(map(int,request.POST.getlist('user_select_quantity')))
         print("quant :",product_quantity)
-        product_quantity.append(1)
+        # product_quantity.append(1)
         product_ids = list(request.POST.getlist('product_id'))
-        product_ids.append(1)
+        # product_ids.append(1)
         products = []
         for product_id,quantity in zip(product_ids,product_quantity):
             product = get_object_or_404(Product,pk=product_id)

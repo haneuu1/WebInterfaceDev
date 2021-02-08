@@ -2,6 +2,7 @@
 {% block title %}product{% endblock %}
 {% block content %}
 
+{% load humanize %}
 <h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="far fa-window-close"></i> 주문취소</h3>
 {% if object_list %}
 <div class="mb-5" style="text-align: center;">{{ user }}의 주문취소내역 입니다</div>
@@ -27,7 +28,7 @@
                     {{order.product.name}}
                 </a>
             </td>
-            <td>{{order.price}}</td>
+            <td>{{order.price|intcomma}}</td>
             <td>{{order.quantity}}</td>
         </tr>
         {% endfor %}

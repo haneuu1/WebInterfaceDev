@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'widget_tweaks',
     'tinymce',
@@ -98,8 +99,8 @@ DATABASES = {
         'NAME': 'myshop',
         'HOST' : 'localhost',
         'PORT' : '3306',
-        'USER' : 'shop',
-        'PASSWORD' : '0000',
+        'USER' : 'root',
+        'PASSWORD' : '1491',
     }
 }
 

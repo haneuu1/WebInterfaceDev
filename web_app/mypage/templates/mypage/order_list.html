@@ -2,7 +2,7 @@
 {% block title %}product{% endblock %}
 {% block content %}
 
-
+{% load humanize %}
 <h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="fas fa-list"></i> 주문조회</h3>
 {% if object_list %}
 <div class="mb-5" style="text-align: center;">{{ user }}의 주문내역 입니다</div>
@@ -29,7 +29,7 @@
                     {{order.product.name}}
                 </a>
             </td>
-            <td>{{order.price}}</td>
+            <td>{{order.price|intcomma}}</td>
             <td>{{order.quantity}}</td>
             <td>
                 <form action="{% url 'order:cancel' %}" method="POST">

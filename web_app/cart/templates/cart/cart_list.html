@@ -4,6 +4,8 @@
 {% block content %}
 <h3 class="h3 m-5 font-weight-normal" style="text-align: center"><i class="fas fa-shopping-bag"></i> 장바구니</h3>
 {% load mathfilters %}
+{% load humanize %}
+
 {% if not cart_items %}
 <p class="mt-5" style="text-align: center;">장바구니에 담긴 상품이 없습니다.</p>
 {% else %}
@@ -34,8 +36,8 @@
                 </a>
             </td>
             <td>
-                <p>{{ cart_item.quantity }} x {{ cart_item.product.price }}</p>
-                <p>{{ cart_item.quantity |mul:cart_item.product.price }}</p></td>
+                <p>{{ cart_item.quantity }} x {{ cart_item.product.price |intcomma }}</p>
+                <p>{{ cart_item.quantity |mul:cart_item.product.price |intcomma }}</p></td>
             <td>
                 <div class="btn-group">
                     <a href="{% url 'cart:minus_cart' cart_item.product.pk %}">
@@ -71,16 +73,16 @@
     <tbody>
         <tr>
             <td>{{counter}} 개</td>
-            <td>{{total}} 원</td>
+            <td>{{total |intcomma}} 원</td>
             {% if total > 30000 %}
-            <td>무료</td>
-            <td>{{total}} 원</td>
+                <td>무료</td>
+                <td>{{total |intcomma}} 원</td>
             {% elif total == 0 %}
-            <td>0 원</td>
-            <td>{{total}} 원</td>
+                <td>0 원</td>
+                <td>{{total |intcomma}} 원</td>
             {% else %}
-            <td>2,500원</td>
-            <td>{{total|add:2500}} 원</td>
+                <td>2,500원</td>    
+                <td>{{total |add:2500 |intcomma}} 원</td>
             {% endif %}
             
         </tr>

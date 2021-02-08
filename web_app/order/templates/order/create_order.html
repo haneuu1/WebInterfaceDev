@@ -1,6 +1,7 @@
 {% extends "base_mypage.html" %}
 {% block title %}order{% endblock %}
 {% block content %}
+{% load humanize %}
 
 <h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="fas fa-receipt"></i> 결제완료</h3>
 <div class="form-group">
@@ -25,7 +26,7 @@
                             {{order.product.name}}
                         </a>
                     </td>
-                    <td>{{order.price}}</td>
+                    <td>{{order.price|intcomma}}</td>
                     <td>{{order.quantity}}</td>
                 </tr>
                 {% endfor %}
