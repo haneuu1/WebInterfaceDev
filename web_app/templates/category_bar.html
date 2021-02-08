@@ -1,12 +1,15 @@
 <nav class="navbar navbar-expand-sm navbar-light bg-light justify-content-center">
     <ul class="navbar-nav">
         <!-- 카테고리 고치기 -->
-        
-        <li class="nav-item"><a class="nav-link" href="#">Category 1</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Category 2</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Category 3</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Category 4</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Category 5</a></li>
+        {#{% for c in categories %}#}
+        <!-- <li class="nav-item"><a class="nav-link" href="{#{% url 'shopwindow:category' c %}#}">{#{{c}}#}</a></li> -->
+        {#{% endfor %}#}
+    
+        <li class="nav-item"><a class="nav-link" href="/product/category/식품">식품</a></li>
+        <li class="nav-item"><a class="nav-link" href="/product/category/주방용품">주방용품</a></li>
+        <li class="nav-item"><a class="nav-link" href="/product/category/생활용품">생활용품</a></li>
+        <li class="nav-item"><a class="nav-link" href="/product/category/가전">가전</a></li>
+        <li class="nav-item"><a class="nav-link" href="/product/category/도서">도서</a></li>
     </ul>
 </nav>
 

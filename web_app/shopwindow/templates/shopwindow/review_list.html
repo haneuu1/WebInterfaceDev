@@ -1,0 +1,21 @@
+{% extends "base_category.html" %}
+{% block title %}Review{% endblock %}
+{% block content %}
+
+<div class="container">
+    {% if user.is_active %}
+        <div class="text-right mr-3">
+            <a href="{%url 'shopwindow:review_add' %}" class="btn btn-dark btn-sm">
+                <i class="fas fa-pencil-alt"></i> 쓰기</a>
+        </div>
+    {% endif %}
+
+    {% if object_list %}
+        {% for review in object_list %}
+            {% include "review_table.html" %}
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% include "pagination.html" %}
+{% endblock %}
