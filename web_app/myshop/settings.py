@@ -26,8 +26,7 @@ SECRET_KEY = ')agy6duxek-ziz7rk-sneej$s6v5u6#^z7%2#b1n*ng)5od^+p'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = ['localhost','127.0.0.1', '54.68.189.150']
 
 # Application definition
 
@@ -97,10 +96,18 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'myshop',
-        'HOST' : 'localhost',
+        'HOST' : 'myshop.cieo9nf9jgyf.us-west-2.rds.amazonaws.com',
         'PORT' : '3306',
+<<<<<<< HEAD
         'USER' : 'shop',
         'PASSWORD' : '0000',
+=======
+        'USER' : 'root',
+        'PASSWORD' : 'qwer1234*',
+	'OPTIONS' : {
+		'init_command' : 'Set sql_mode="STRICT_TRANS_TABLES"'
+	}
+>>>>>>> 3582a54c9744db0d0734e4fcc235580f29b3ccac
     }
 }
 
