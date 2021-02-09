@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 from shopwindow.models import Product
 from cart.models import Cart, CartItem
 
+import json
+
 @login_required
 def _cart_id(request):
     cart = Cart.objects.get(user_id=request.user)
@@ -67,8 +69,6 @@ def remove_cart(request, product_id):
 def cart_detail(request, total=0, counter=0, cart_items=None):
     cart = Cart.objects.get(id=_cart_id(request))
     cart_items = CartItem.objects.filter(cart=cart, active=True)
-    for cart_item in cart_items:
-        total += (cart_item.product.price * cart_item.quantity)
-        counter += cart_item.quantity
-        
-    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, total=total, counter=counter))
+    items_js = json.dumps([item.to_json() for item in cart_items]) 
+    # print(f'items: {items_js}')
+    return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, items_js=items_js))
