@@ -98,16 +98,11 @@ DATABASES = {
         'NAME': 'myshop',
         'HOST' : 'myshop.cieo9nf9jgyf.us-west-2.rds.amazonaws.com',
         'PORT' : '3306',
-<<<<<<< HEAD
-        'USER' : 'shop',
-        'PASSWORD' : '0000',
-=======
         'USER' : 'root',
         'PASSWORD' : 'qwer1234*',
 	'OPTIONS' : {
 		'init_command' : 'Set sql_mode="STRICT_TRANS_TABLES"'
 	}
->>>>>>> 3582a54c9744db0d0734e4fcc235580f29b3ccac
     }
 }
 
