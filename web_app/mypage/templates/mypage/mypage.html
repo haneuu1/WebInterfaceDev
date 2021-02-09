@@ -2,6 +2,14 @@
 {% block title %}mypage{% endblock %}
 {% block content %}
 
+
+{% if user.is_superuser %}
+
+
+<a href="{% url 'mypage:add'  %}"> 상품 관리 </a>
+<br>
+
+{% endif %}
 <a href="{% url 'mypage:myorder'  %}"> 주문 내역 </a>
 <br>
 <a href="{% url 'mypage:mycanceled'  %}"> 취소 주문 내역</a>
