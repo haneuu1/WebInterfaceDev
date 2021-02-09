@@ -1,5 +1,14 @@
 from django.contrib.auth.mixins import AccessMixin
 from django.urls import reverse_lazy
+from django.views.generic import TemplateView
+
+
+
+# TemplateView
+class HomeView(TemplateView):
+    template_name = 'homepage.html'
+
+
 
 class OwnerOnlyMixin(AccessMixin):
     raise_exeption = True
