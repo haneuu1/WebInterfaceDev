@@ -12,8 +12,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'mypage:mypage' %}"><i class="far fa-user"></i> 마이페이지</a></li>
         {% if user.is_anonymous %}
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login'%}"><i class="fas fa-sign-in-alt"></i> 로그인</a></li>
-        {% else %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
+
         {% endif %}   
     </ul>
 </nav>
