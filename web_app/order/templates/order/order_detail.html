@@ -3,39 +3,10 @@
 {% block content %}
 
 {% load calc %}
+{% load humanize %}
 <form action="{% url 'order:create_order' %}" method="post">
-    {% csrf_token %}
-    <input type="hidden" name="user_id" value={{user.id}}>
-    <table class="table table-hover table-sm my-5">
-        <thead>
-            <tr>
-                <th style="width: 30%;">
-                    <h4>결제 정보</h4>
-                </th>
-                <td style="width: 70%; text-align: right;"></td>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th style="width: 80%;">상품 이름</th>
-                <th style="width: 10%;">상품 수량​</th>
-                <th style="width: 10%;">가격</th>
-            </tr>
-            {% if products %}
-            {% for product in products %}
-            <tr>
-                <td>
-                    <img src="{{product.image.thumb_url}}" alt="" >{{product.name}}
-                </td>
-                <td style="vertical-align: middle;">{{product.quantity}}</td>
-                <td style="vertical-align: middle;">{{product.price|multiply:product.quantity}}</td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-        </tbody>
-    </table>
-    <!-- 총 상품금액 받아오기 -->
-    <h4 class="mt-3 mb-5" style="text-align: right;">총 주문 금액</h4>
+
+    {% include "order/order_table.html" %}
 
     <table class="table table-hover table-sm my-5">
         <thead>
@@ -70,7 +41,7 @@
                 </th>
                 <!-- 구매자 정보 받아오기 -->
                 <td style="width: 70%; text-align: right;">
-                    <button class="btn btn-dark btn-sm">구매자와 동일</button>
+                    <div class="btn btn-dark btn-sm">구매자와 동일</div>
                 </td>
             </tr>
         </thead>
@@ -102,7 +73,7 @@
         <tbody>
             <tr>
                 <th>총 결제 금액​</th>
-                <td>얼마</td>
+                <td>{{products|total|intcomma}} 원</td>
             </tr>
             <tr>
                 <th>결제방법</th>
@@ -121,4 +92,13 @@
     </div>
 </form>
 
+{% endblock %}
+{% block extra-script %}
+<script>
+
+
+
+
+
+</script>
 {% endblock %}

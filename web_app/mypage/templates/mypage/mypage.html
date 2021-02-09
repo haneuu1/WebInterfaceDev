@@ -1,0 +1,10 @@
+{% extends "base_mypage.html" %}
+{% block title %}mypage{% endblock %}
+{% block content %}
+
+<a href="{% url 'mypage:myorder'  %}"> 주문 내역 </a>
+<br>
+<a href="{% url 'mypage:mycanceled'  %}"> 취소 주문 내역</a>
+
+
+{% endblock %}

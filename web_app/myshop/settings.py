@@ -38,14 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
     'widget_tweaks',
     'tinymce',
+    'mathfilters',
 
     'shopwindow',
     'photo',
     'accounts',
     'order',
+    'mypage',
+    'cart',
 
 ]
 
@@ -95,8 +99,8 @@ DATABASES = {
         'NAME': 'myshop',
         'HOST' : 'localhost',
         'PORT' : '3306',
-        'USER' : 'shop',
-        'PASSWORD' : '0000',
+        'USER' : 'root',
+        'PASSWORD' : '1491',
     }
 }
 
@@ -143,4 +147,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '.'

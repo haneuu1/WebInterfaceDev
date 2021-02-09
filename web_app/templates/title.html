@@ -8,12 +8,12 @@
 
     <!-- 장바구니 / 마이페이지 / 로그인 아이콘 -->
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="#"><i class="fas fa-shopping-bag"></i> 장바구니</a></li>
-        <li class="nav-item"><a class="nav-link" href="#"><i class="far fa-user"></i> 마이페이지</a></li>
-        {% if user.is_authenticated %}
-        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
-        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'cart:cart_detail'%}"><i class="fas fa-shopping-bag"></i> 장바구니</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'mypage:mypage' %}"><i class="far fa-user"></i> 마이페이지</a></li>
+        {% if user.is_anonymous %}
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login'%}"><i class="fas fa-sign-in-alt"></i> 로그인</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
         {% endif %}   
     </ul>
 </nav>
@@ -25,32 +25,30 @@
         background-color: whitesmoke;
     }
 
-    .searchbar {
-        height: 40px;
-        background-color: lightgrey;
-        border-radius: 30px;
-        padding: 10px;
+    
+    .searchbar{
+    margin-bottom: auto;
+    margin-top: auto;
+    background-color: lightgrey;
+    border-radius: 30px;
+    padding: 10px;
     }
 
-    .search_input {
+    .search_input{
+    border: 0;
+    outline: 0;
+    padding: 0 10px;
+    width: 250px;
+
+    caret-color:black;
+    background: none;
+    background-color: lightgrey;
+    }
+
+    .search_icon{
+        border:transparent;
+        background-color:transparent;
         color: black;
-        border: 0;
-        outline: 0;
-        background: none;
-        caret-color: black;
-        width: 300px;
-    }
-
-    .search_icon {
-        height: 20px;
-        width: 20px;
-        float: right;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 50%;
-        color: white;
-        text-decoration: none;
     }
 
     h1 {
@@ -67,39 +65,13 @@
         text-decoration:none;
     }
 
-    .searchbar{
-    margin-bottom: auto;
-    margin-top: auto;
-    background-color: transparent;
-    border-radius: 30px;
-    padding: 10px;
+    .table {
+    margin-bottom: 50px;
     }
 
-    .search_input{
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 0;
-    caret-color:transparent;
-    /* transition: width 0.4s linear; */
+    .table td {
+        vertical-align: middle;
     }
 
-    .searchbar:hover > .search_input{
-    padding: 0 10px;
-    width: 450px;
-    caret-color:black;
-    transition: width 0.4s linear;
-    }
-
-    .searchbar:hover > .search_icon{
-        background-color:transparent;
-        color: black;
-    }
-
-    .search_icon{
-        border:transparent;
-        background-color:transparent;
-        color: black;
-    }
 
 </style>
