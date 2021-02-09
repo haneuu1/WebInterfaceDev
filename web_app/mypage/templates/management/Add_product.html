@@ -4,8 +4,6 @@
 {% load widget_tweaks %}
 
 
-<h1>Product Create/Update - {{user}}</h1>
-<p class="font-italic">This is a creation or update form for your post.</p>
 {% if form.errors %}
 <div class="alert alert-danger">
     <div class="font-weight-bold">
@@ -13,52 +11,67 @@
     {{ form.errors }}
 </div>
 {% endif %}
-<form action="." method="post" class="card pt-3"  enctype="multipart/form-data">{% csrf_token %}
-    <div class="form-group row">
-        {{ form.name|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
+<table class = "table table-hover">
+    <thead class = "info" >
+    <tr><td class = " border-0">
+
+        <h1>상품 추가 하기</h1>
+
+    </td></tr>
+    </thead>
+    <tbody>
+<form action="." method="post" class="list-group pt-3"  enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <tr><td class = "row">
+        <label for="files" class="col-form-label col-sm-2 ml-3 font-weight-bold">상품명 :</label>
         <div class="col-sm-5">
-            {{ form.name|add_class:"form-control"|attr:"autofocus" }}
+            {{ form.name|add_class:"form-control border-0"|attr:"autofocus" }}
         </div>
-    </div>
-    <div class="form-group row">
-        {{ form.category|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
+    </td></tr>
+    
+    <tr><td class = "row">
+        <label for="" class="col-form-label col-sm-2 ml-3 font-weight-bold">카테고리 :</label>
         <div class="col-sm-5">
-            {{ form.category|add_class:"form-control"|attr:"form-control" }}
+            {{ form.category|add_class:"form-control border-0"|attr:"form-control" }}
         </div>
-        <small class="form-text text-muted">{{ form.slug.help_text }}</small>
-    </div>
-    <div class="form-group row">
+    </td></tr>
+    
+    <tr><td class = "row">
         <label for="files" class="col-form-label col-sm-2 ml-3 font-weight-bold">썸네일 :</label>
         <div class="col-sm-8 ">
             <input type="file" id="files" name="image" >
         </div>
-    </div> 
-    <div class="form-group row">
-        {{ form.description|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
+    </td></tr>
+    
+    <tr><td class = "row">
+        <label for="" class="col-form-label col-sm-2 ml-3 font-weight-bold">짧은 설명 :</label>
         <div class="col-sm-5">
-            {{ form.description|add_class:"form-control" }}
+            {{ form.description|add_class:"form-control border-0" }}
         </div>
-        <small class="form-text text-muted">
-            {{ form.description.help_text }}</small>
-    </div>
-    <div class="form-group row">
-        {{ form.price|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
+    </td></tr>
+    
+    <tr><td class = "row">
+        <label for="" class="col-form-label col-sm-2 ml-3 font-weight-bold">가격 :</label>
         <div class="col-sm-8">
-            {{ form.price|add_class:"form-control" }}
+            {{ form.price|add_class:"form-control border-0" }}
         </div>
-    </div>
-    <div class="form-group row">
-        {{ form.quantity|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
+    </td></tr>
+    
+    <tr><td class = "row">
+        <label for="" class="col-form-label col-sm-2 ml-3 font-weight-bold">재고 :</label>
         <div class="col-sm-5">
-            {{ form.quantity|add_class:"form-control" }}
+            {{ form.quantity|add_class:"form-control border-0" }}
         </div>
-        <small class="form-text text-muted">{{ form.tags.help_text }}</small>
-    </div>
-    <div class="form-group">
-        <div class="offset-sm-2 col-sm-5">
-            <input type="submit" value="Submit" class="btn btn-info" />
-        </div>
-    </div>
+    </td></tr>
+
+    <tr><td class = "text-center">
+            <input type="submit" value="Submit" class="btn btn-dark " />
+
+    </td></tr>
 </form>
+</tbody>
+</table>
+
 
 {% endblock %}

@@ -24,8 +24,20 @@ class Mypage(View,AccessMixin):
             self.handle_no_permission()
             return redirect(self.get_login_url())
 
-        return render(request, self.template_name ,{})
+        context = self.get_context_data(**kwargs)
 
+        return render(request, self.template_name ,context)
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context["order_num"] = Order.objects.filter(Q(owner=self.request.user)&\
+                                    Q(order_status = "Ordered")).count()
+
+        context["cancel_num"] = Order.objects.filter(Q(owner=self.request.user)&\
+                                Q(order_status = "Canceled")).count()
+        return context
+    
+    
 
 class OrderLV(ListView):
     model = Order
