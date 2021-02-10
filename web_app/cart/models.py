@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import CASCADE
+from django.db.models.expressions import OrderBy
 from shopwindow.models import Product
 
 from django.dispatch import receiver
@@ -36,3 +37,17 @@ class CartItem(models.Model):
             'product_price': self.product.price,
             'user_quantity': self.quantity
         }
+
+class WishItem(models.Model):
+    product     = models.ForeignKey(Product, on_delete=CASCADE)
+    owner       = models.ForeignKey(User, on_delete=CASCADE)
+    create_dt   = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-create_dt',)
+
+    def __str__(self):
+        return str(self.product)
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)

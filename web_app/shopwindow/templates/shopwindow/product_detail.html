@@ -126,7 +126,7 @@
     </form>
     <div class="btn-group btn-block">
         <a href="{% url 'cart:plus_cart' product.pk %}" type="submit" class="btn btn-outline-dark" value="add_cart">장바구니</a>
-        <button type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</button>
+        <a href="{% url 'cart:add_wish' product.pk %}" type="submit" class="btn btn-outline-dark" value="add_wish">관심상품</a>
     </div>
 </div>
 <br />

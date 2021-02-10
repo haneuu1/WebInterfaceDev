@@ -22,6 +22,10 @@
         <a href="{% url 'mypage:mycanceled'  %}"> 취소 주문 내역</a>
         <span class="badge badge-primary badge-pill">{{cancel_num}}</span>
     </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'cart:wish_list'  %}"> 관심상품</a>
+        <span class="badge badge-primary badge-pill">{{wish_num}}</span>
+    </li>
 </ul>
 
 <br>
