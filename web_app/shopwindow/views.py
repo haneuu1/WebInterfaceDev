@@ -40,7 +40,8 @@ class ProductDV(DetailView):
             quantity_list.append(i)
         context['quantity_list'] = quantity_list
         context['reviews'] = Review.objects.all()
-        context['qnas'] = QuestionAnswer.objects.all()
+        context['questions'] = Question.objects.all()
+        context['answers'] = Answer.objects.all()
 
         return context
 
@@ -121,9 +122,8 @@ class ReviewDeleteView(OwnerOnlyMixin, DeleteView) :
 
 
 #--- FormView, Q&A
-class QACreateView(LoginRequiredMixin, CreateView):
-    model = QuestionAnswer
-    template_name = 'shopwindow/qna_form.html'
+class QuestionCreateView(LoginRequiredMixin, CreateView):
+    model = Question
     fields = ['title', 'content', 'product']
     # initial = {'title':'title', 'content':'content'}
     
@@ -134,19 +134,42 @@ class QACreateView(LoginRequiredMixin, CreateView):
     def get_success_url(self):
         return reverse('shopwindow:detail',args=(self.object.product.id,))
 
-class QAUpdateView(OwnerOnlyMixin, UpdateView):
-    model = QuestionAnswer
-    template_name = 'shopwindow/qna_form.html'
+class QuestionUpdateView(OwnerOnlyMixin, UpdateView):
+    model = Question
     fields = ['title', 'content', 'product']
     # success_url = reverse_lazy('shopwindow:index')
 
     def get_success_url(self):
         return reverse('shopwindow:detail',args=(self.object.product.id,))
 
-class QADeleteView(OwnerOnlyMixin, DeleteView) :
-    model = QuestionAnswer
-    template_name = 'shopwindow/qna_confirm_delete.html'
+class QuestionDeleteView(OwnerOnlyMixin, DeleteView) :
+    model = Question
     # success_url = reverse_lazy('shopwindow:index')
 
     def get_success_url(self):
         return reverse('shopwindow:detail',args=(self.object.product.id,))
+
+#--- FormView, Q&A
+class AnswerCreateView(LoginRequiredMixin, CreateView):
+    model = Answer
+    fields = ['question', 'content']
+    
+    def form_valid(self, form):
+        form.instance.owner = self.request.user
+        return super().form_valid(form)
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.question.product.id,))
+
+class AnswerUpdateView(OwnerOnlyMixin, UpdateView):
+    model = Answer
+    fields = ['question', 'content']
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.question.product.id,))
+
+class AnswerDeleteView(OwnerOnlyMixin, DeleteView) :
+    model = Answer
+
+    def get_success_url(self):
+        return reverse('shopwindow:detail',args=(self.object.question.product.id,))

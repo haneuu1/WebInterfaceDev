@@ -1,0 +1,25 @@
+<tr>
+    <td style="text-align: right;">{{answer.create_dt|date:"Y-m-d H:i"}}</td>
+</tr>
+<tr>
+    <th style="text-align: left;">
+        답변
+    </th>
+</tr>
+
+<tr>
+    <td style="text-align:left">
+        {{answer.content | linebreaks}}
+    </td>
+</tr>
+{% if user.is_superuser %}
+<!-- 관리자만 수정 삭제 -->
+<tr>
+    <td style="text-align: right;">
+        <a href="{%url 'shopwindow:answer_update' answer.id %}">
+            <i class="far fa-edit"></i> 답변 수정</a>
+        <a href="{%url 'shopwindow:answer_delete' answer.id %}" class="text-danger">
+            <i class="fas fa-trash"></i> 답변 삭제</a>
+    </td>
+</tr>
+{% endif %}

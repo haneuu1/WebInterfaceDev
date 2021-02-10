@@ -171,26 +171,27 @@
             {% include "pagination.html" %}
         </div>
 
-        <!-- Q&A / 자기 질문만 보이기 -->
+        <!-- Q&A / 자기 질문만 보기 -->
         <div id="qna" class="container tab-pane fade"><br>
             {% if user.is_active %}
             <div class="text-right mr-3">
-                <a href="{%url 'shopwindow:QnA_add' %}" class="btn btn-dark btn-sm">
+                <a href="{%url 'shopwindow:question_add' %}" class="btn btn-dark btn-sm">
                     <i class="fas fa-pencil-alt"></i> 질문하기</a>
             </div>
             {% endif %}
 
-            {% if qnas %}
-                {% for qna in qnas %}
-                    {% if user == qna.owner %}
-                        {% if qna.product.id == object.id %}
-                        {% include "qna_table.html" %}
+            {% if questions %}
+                {% for question in questions %}
+                    {% if user == question.owner or user.is_superuser %}
+                        {% if question.product.id == object.id %}
+                        {% include "question_table.html" %}
                         {% endif %}
                     {% endif %}
                 {% endfor %}
             {% endif %}
 
             {% include "pagination.html" %}
+            <br><br><br><br><br><br><br>
         </div>
     </div>
 </div>

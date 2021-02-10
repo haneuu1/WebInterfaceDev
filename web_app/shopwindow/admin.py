@@ -9,4 +9,4 @@ class BookmarkAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
-    list_display = ('title','content','create_dt','modify_dt','owner')
+    list_display = ('title','product','content','create_dt','modify_dt','owner')

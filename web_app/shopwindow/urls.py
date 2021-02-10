@@ -22,11 +22,18 @@ urlpatterns = [
     # /product/review/
     # path('review/', ReviewLV.as_view(), name="review_list"),
 
-    # /product/Q&A/add/
-    path('QnA/add/', QACreateView.as_view(), name="QnA_add"),
-    # /product/review/<int:pk>/update/
-    path('QnA/<int:pk>/update/', QAUpdateView.as_view(), name="QnA_update"),
-    # /product/review/<int:pk>/delete/
-    path('QnA/<int:pk>/delete/', QADeleteView.as_view(), name="QnA_delete"),
+    # /product/question/add/
+    path('question/add/', QuestionCreateView.as_view(), name="question_add"),
+    # /product/question/<int:pk>/update/
+    path('question/<int:pk>/update/', QuestionUpdateView.as_view(), name="question_update"),
+    # /product/question/<int:pk>/delete/
+    path('question/<int:pk>/delete/', QuestionDeleteView.as_view(), name="question_delete"),
+
+    # /product/answer/add/
+    path('answer/add/', AnswerCreateView.as_view(), name="answer_add"),
+    # /product/answer/<int:pk>/update/
+    path('answer/<int:pk>/update/', AnswerUpdateView.as_view(), name="answer_update"),
+    # /product/answer/<int:pk>/delete/
+    path('answer/<int:pk>/delete/', AnswerDeleteView.as_view(), name="answer_delete"),
 
 ]

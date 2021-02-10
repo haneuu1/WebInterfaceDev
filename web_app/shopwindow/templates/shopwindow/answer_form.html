@@ -4,7 +4,7 @@
 
 {% block content %}
 <h3 class="h3 mb-3 font-weight-normal" style="text-align: center">
-    <i class="far fa-question-circle"></i> Q&A</h3>
+    <i class="far fa-comment-dots"></i> Answer</h3>
 
 {% if form.errors %}
 <div class="alert alert-danger">
@@ -16,17 +16,11 @@
 
 <form action="." method="post" enctype="multipart/form-data" class="card pt-3">
     {% csrf_token %}
-    <div class="form-group row offset-sm-2" style="text-align: right;">
-        {{ form.title|add_label_class:"col-form-label col-sm-2 ml-3 font-weight-bold" }}
-        <div class="col-sm-6">
-            {{ form.title|add_class:"form-control"|append_attr:"title" }}
-        </div>
-    </div>
 
     <div class="form-group row offset-sm-2" style="text-align: right;">
-        <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_product">상품명:</label>
+        <label class="col-form-label col-sm-2 ml-3 font-weight-bold" for="id_product">질문:</label>
         <div class="col-sm-6" style="text-align: left;">
-            {{ form.product|add_class:"form-control"|append_attr:"product" }}
+            {{ form.question|add_class:"form-control"|append_attr:"product" }}
         </div>
     </div>
 
@@ -37,9 +31,10 @@
         </div>
     </div>
     <hr>
+
     <div class="form-group">
         <div class="offset-sm-3 col-sm-6">
-            <input type="submit" value="작성" class="btn btn-dark btn-block my-3" />
+            <input type="submit" value="답변" class="btn btn-dark btn-block my-3" />
         </div>
     </div>
 </form>

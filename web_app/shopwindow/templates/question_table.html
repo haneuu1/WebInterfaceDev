@@ -1,0 +1,47 @@
+<table class="table table-hover table-sm my-5 offset-sm-3 col-sm-6">
+    <tbody>
+        <tr>
+            <td style="text-align: right;">
+                {{question.create_dt|date:"Y-m-d H:i"}}
+            </td>
+        </tr>
+        <tr>
+            <th style="text-align:left">
+                {{question.title}}
+            </th>
+        </tr>
+        <tr>
+            <td style="text-align:left">
+                {{question.content | linebreaks}}
+            </td>
+        </tr>
+
+        {% if question.answer%}
+        {% with question.answer as answer %}   
+            {% include "answer_table.html" %}          
+        {% endwith %}
+        {% else %}
+            {% if user.is_superuser %}
+            <!-- 답변하기 -->
+            <tr>
+                <td style="text-align: right;">
+                    <a href="{%url 'shopwindow:answer_add' %}" class="text-primary">
+                        <i class="far fa-comment-dots"></i> 답변하기</a>
+                </td>
+            </tr>    
+            {% endif %}
+        {% endif %}
+
+        
+        {% if user == question.owner %}
+        <tr>
+            <td style="text-align: right;">
+                <a href="{%url 'shopwindow:question_update' question.id %}">
+                    <i class="far fa-edit"></i> 질문 수정</a>
+                <a href="{%url 'shopwindow:question_delete' question.id %}" class="text-danger">
+                    <i class="fas fa-trash"></i> 질문 삭제</a>
+            </td>
+        </tr>
+        {% endif %}
+    </tbody>
+</table>
