@@ -38,11 +38,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
 
+    'widget_tweaks',
+    'tinymce',
+    'mathfilters',
 
     'shopwindow',
     'photo',
     'accounts',
+    'order',
+    'mypage',
+    'cart',
 
 ]
 
@@ -72,6 +79,10 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+        # customtag를 사용하기 위한 추가부분
+        'libraries':{
+            'calc' : 'order.templates.calc'
+            }
         },
     },
 ]
@@ -136,4 +147,6 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+
+LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '.'

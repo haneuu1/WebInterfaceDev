@@ -1,0 +1,59 @@
+{% extends "base_mypage.html" %}
+{% block title %}product{% endblock %}
+{% block content %}
+
+{% load humanize %}
+<h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="fas fa-list"></i> 주문조회</h3>
+{% if object_list %}
+<div class="mb-5" style="text-align: center;">{{ user }}의 주문내역 입니다</div>
+<table class="table table-hover table-sm">
+    <thead class="thead-light">
+        <tr>
+            <th style="width: 15%;">주문 목록</th>
+            <th style="width: 50%;"></th>
+            <th style="width: 15%;">주문금액</th>
+            <th style="width: 15%;">수량</th>
+            <th style="width: 5%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for order in object_list %}
+        <tr>
+            <td style="text-align: center;">
+                {{order.order_date|date:"Y-m-d"}}<br>
+                {{order.order_date|date:"H:i"}}
+            </td>
+            <td>
+                <a href="{% url 'shopwindow:detail' order.product.id %}">
+                    <img width="30%" src="{{order.product.image.thumb_url}}" alt="상품사진">
+                    {{order.product.name}}
+                </a>
+            </td>
+            <td>{{order.price|intcomma}}</td>
+            <td>{{order.quantity}}</td>
+            <td>
+                <form action="{% url 'order:cancel' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="cancel_order_pk" value={{order.pk}}>
+                    <input type="submit" value="X" class="btn btn-default">
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<div class="mb-5" style="text-align: center;">{{ user }}의 주문내역이 존재하지 않습니다!</div>
+{% endif %}
+
+
+<br>
+{% include "pagination.html" %}
+
+<!-- 
+
+<img src="/media/photo/user_상품 1/image.thumb.jpg" style="width: 100%;">
+
+-->
+
+{% endblock %}

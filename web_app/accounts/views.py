@@ -1,7 +1,7 @@
-# Create your views here.
-
 from django.shortcuts import render
 from .forms import RegisterForm
+
+# Create your views here.
 
 def register(request):
     if request.method == "POST":
@@ -15,3 +15,4 @@ def register(request):
     else:
         user_form = RegisterForm()
     return render(request, 'registration/register.html', {'form':user_form})
+

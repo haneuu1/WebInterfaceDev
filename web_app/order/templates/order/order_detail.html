@@ -1,0 +1,102 @@
+{% extends "base_mypage.html" %}
+{% block title %}order{% endblock %}
+{% block content %}
+
+{% load calc %}
+{% load humanize %}
+<form action="{% url 'order:create_order' %}" method="post">
+
+    {% include "order/order_table.html" %}
+
+    <table class="table table-hover table-sm my-5">
+        <thead>
+            <tr>
+                <th style="width: 30%;">
+                    <h4>구매자 정보</h4>
+                </th>
+                <td style="width: 70%;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>이름</th>
+                <td id = "user_name">{{user.username}}</td>
+            </tr>
+            <tr>
+                <th>이메일</th>
+                <td id = "user_email">{{user.email}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover table-sm my-5">
+        <thead>
+            <tr>
+                <th style="width: 30%;">
+                    <h4>받는사람 정보</h4>
+                </th>
+                <!-- 구매자 정보 받아오기 -->
+                <td style="width: 70%; text-align: right;">
+                    <div class="btn btn-dark btn-sm" onclick="same_with_user()">구매자와 동일</div>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th><label for="destination_name">이름</label></th>
+                <td><input class="border-0" type="text" id="destination_name"></td>
+            </tr>
+            <tr>
+                <th><label for="destination_email">이메일</label></th>
+                <td><input class="border-0" type="text" id ="destination_email" ></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <table class="table table-hover table-sm my-5">
+        <thead>
+            <tr>
+                <th style="width: 30%;">
+                    <h4>결제 정보</h4>
+                </th>
+                <td style="width: 70%; text-align: right;"></td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>총 결제 금액​</th>
+                <td>{{products|total|add:shipping_fee|intcomma}} 원</td>
+            </tr>
+            <tr>
+                <th>결제방법</th>
+                <td>
+                    <label><input type="radio" name="pay" value="account">무통장입금</label>
+                    <label><input type="radio" name="pay" value="creditcard">신용/체크카드</label>
+                    <label><input type="radio" name="pay" value="naverpay">네이버페이</label>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <hr class="mt-0 mb-3">
+    <div class="offset-sm-4 col-sm-4 mb-5">
+        <input class="btn btn-dark btn-block" type="submit" value="결제하기">
+    </div>
+    </div>
+</form>
+
+{% endblock %}
+{% block extra-script %}
+<script>
+    function same_with_user(){
+        let user_name = document.getElementById("user_name").innerHTML;
+        let user_email = document.getElementById("user_email").innerHTML;
+        let destination_name = document.getElementById("destination_name");
+        let destination_email = document.getElementById("destination_email");
+
+        destination_name.value = user_name;
+        destination_email.value = user_email;
+    }
+
+
+</script>
+{% endblock %}
