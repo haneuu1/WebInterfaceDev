@@ -3,15 +3,17 @@
 {% block content %}
 
 
-{% if user.is_superuser %}
 
 <h1>마이페이지</h1>
 <ul class="list-group">
+    
+    {% if user.is_superuser %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
 
         <a href="{% url 'mypage:add'  %}"> 상품 관리 </a>
 
     </li>
+    {% endif %}
     <li class="list-group-item d-flex justify-content-between align-items-center">
         <a href="{% url 'mypage:myorder'  %}"> 주문 내역 </a>
         <span class="badge badge-primary badge-pill">{{order_num}}</span>
@@ -24,7 +26,6 @@
 
 <br>
 
-{% endif %}
 
 
 {% endblock %}
