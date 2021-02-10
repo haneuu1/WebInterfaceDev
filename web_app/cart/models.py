@@ -30,5 +30,9 @@ class CartItem(models.Model):
     def sub_total(self):
         return self.product.price * self.quantity
 
-
-# pip install django-mathfilters 필요
+    def to_json(self):
+        return {
+            'product_name': self.product.name,
+            'product_price': self.product.price,
+            'user_quantity': self.quantity
+        }

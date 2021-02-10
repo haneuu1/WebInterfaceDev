@@ -51,6 +51,15 @@
             <img src="{{ product.image.url }}" alt="product_img" width="50%">
         </div>
         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+            {% if user.is_superuser %}
+            <div class="text-right">
+                <a href="{% url 'mypage:update' product.id %}" class="mr-3">
+                <i class="far fa-edit"></i> 수정</a>
+                <a href="{% url 'mypage:delete' product.id %}" class="text-danger mr-3">
+                <i class="fas fa-trash"></i> 삭제</a>
+            </div>
+            {% endif %}
+               
             <table>
                 <tbody>
                     <tr>

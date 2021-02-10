@@ -1,0 +1,15 @@
+{% extends "base_category.html" %}
+{% block title %}Delete Product{% endblock %}
+{% block content %}
+
+<div class= "card py-5">
+
+    <h1>"{{ object }}"를 정말로 삭제하시겠습니까?</h1>
+    <br>
+    <form class = "text-center" action="." method="post">{% csrf_token %}
+        <input type="submit" value="Confirm" class="btn btn-danger btn-sm" />
+    </form>
+
+</div>
+
+{% endblock %}
