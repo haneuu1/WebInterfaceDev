@@ -1,3 +1,4 @@
+from cart.models import WishItem
 from shopwindow.models import Product
 from typing import List
 from django.shortcuts import render,redirect
@@ -35,6 +36,8 @@ class Mypage(View,AccessMixin):
 
         context["cancel_num"] = Order.objects.filter(Q(owner=self.request.user)&\
                                 Q(order_status = "Canceled")).count()
+        
+        context["wish_num"] = WishItem.objects.filter(owner=self.request.user).count()
         return context
     
     

@@ -1,12 +1,17 @@
 from django.http.response import HttpResponse
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth import *
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, CreateView, DeleteView, View
+from django.contrib.auth.mixins import AccessMixin, LoginRequiredMixin
+from django.db.models import Q
 
+from myshop.views import OwnerOnlyMixin
 from shopwindow.models import Product
-from cart.models import Cart, CartItem
+from cart.models import Cart, CartItem, WishItem
+from accounts.models import User
 
 import json
 
@@ -72,3 +77,44 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     items_js = json.dumps([item.to_json() for item in cart_items]) 
     # print(f'items: {items_js}')
     return render(request, 'cart/cart_list.html', dict(cart_items=cart_items, items_js=items_js))
+
+
+@login_required
+def add_wish(request, product_id):
+    product = Product.objects.get(id=product_id)
+    owner = User.objects.get(username=request.user)
+    try:
+        wish_item = WishItem.objects.get(product=product, owner=owner)
+        wish_item.save()
+    except WishItem.DoesNotExist:
+            wish_item= WishItem.objects.create(
+                product = product,
+                owner = owner,
+            )
+            wish_item.save()
+
+    return redirect('cart:wish_list')
+
+def remove_wish(request, product_id):
+    owner = User.objects.get(username=request.user)
+    product = get_object_or_404(Product, id=product_id)
+    wish_item = WishItem.objects.get(product=product, owner=owner)
+    wish_item.delete()
+    return redirect('cart:wish_list')
+
+class WishLV(View, AccessMixin):
+    model = WishItem
+    template_name = 'cart/wish_list.html'
+
+    def get(self,request,*args,**kwargs):
+        ## 로그인 안한 상태 일때
+        if not request.user.is_authenticated:
+            self.handle_no_permission()
+            return redirect(self.get_login_url())
+        context = self.get_context_data(**kwargs)
+        return render(request, self.template_name, context=context)
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context["products"] = WishItem.objects.filter(owner=self.request.user)
+        return context
