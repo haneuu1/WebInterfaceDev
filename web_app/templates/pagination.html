@@ -1,5 +1,5 @@
-<div>
-    <ul class="pagination justify-content-center">
+<div class="py-5">
+    <ul class="pagination my justify-content-center">
         {% if page_obj.has_previous %}
         <li class="page-item">
             <a class="page-link" href="?page={{page_obj.previous_page_number}}">
@@ -28,3 +28,23 @@
         {% endif %}
     </ul>
 </div>
+
+<style>
+    ul.pagination li a {
+        color: #EA5903;
+    }
+    ul.pagination li a:hover {
+        color: #EA5903;
+    }
+   
+    .my.pagination > .active > a, 
+    .my.pagination > .active > span, 
+    .my.pagination > .active > a:hover, 
+    .my.pagination > .active > span:hover, 
+    .my.pagination > .active > a:focus, 
+    .my.pagination > .active > span:focus {
+    background: #EA5903;
+    border-color: #EA5903;
+    }
+    
+</style>
