@@ -1,0 +1,29 @@
+{% extends 'base_category.html' %}
+{% load widget_tweaks %}
+
+{% block title %}Edit Profile{% endblock %}
+{% block content %}
+
+
+<h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="fas fa-user-plus"></i> 개인정보 변경 </h3>
+
+
+<br/><br/>
+<div class="form-group">
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <br/>
+    <a class="btn btn-dark btn-block, col-sm-3" href="{% url 'accounts:password_change'%}"><i class="fas fa-sign-in-alt"></i> 비밀번호 변경</a><button class="btn btn-dark btn-block, offset-sm-6 col-sm-3">개인정보 변경 완료</button>
+
+
+
+
+</form>
+
+
+</div>
+
+
+
+{% endblock %}
