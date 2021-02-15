@@ -12,8 +12,13 @@ def register(request):
         if user_form.is_valid() and profile_form.is_valid():
             new_user = user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password1'])
+            new_user.id = request.user.id
             new_user.save()
-            profile_form.save()
+            
+            profile = profile_form.save(commit=False)
+            profile.user = new_user
+            profile.save()
+
             return render(request, 'registration/register_done.html',{'new_user':new_user})
 
     else:
