@@ -1,8 +1,25 @@
 {% extends "base_category.html" %}
 {% block title %}product{% endblock %}
 {% block content %}
+<div class="container text-center">
+    <h1>MultiMall에 오신것을 환영합니다!</h1>
+</div>
+{% include "shopanimation.html" %}
 
+<hr>
+<div class="container text-center">
+    <h1>오늘의 추천 상품</h1>
+</div>
+<br>
+<div class="card-deck">
+    {% if object_list %}
+        {% for product in object_list %}
+            {% include "product_card.html" %}
+        {% endfor %}
+    {% elif search_term %}
+        <b>{{ search_term }}의 검색결과가 존재하지 않습니다!</b>
+    {% endif %}
+</div>
 
-Home page
 
 {% endblock %}
