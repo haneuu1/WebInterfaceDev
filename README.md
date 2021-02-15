@@ -6,18 +6,12 @@
 
 박민조 최하늘 최현호 홍정연
 
-- [Multimon](#multimon)
-- [주요 기능](#-----)
-  * [메인화면](#----)
-  * [로그인과 회원가입 (accounts)](#-----------accounts-)
-  * [마이페이지 (mypage)](#-------mypage-)
-  * [상품페이지 (shopwindow)](#-------shopwindow-)
-  * [장바구니 (cart)](#------cart-)
-  * [상품구매 (order)](#------order-)
-
-<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
-
-## Multimon
+- [메인화면](#메인화면)
+- [로그인과 회원가입 accounts](#로그인과-회원가입-accounts)
+- [마이페이지 mypage](#마이페이지-mypage)
+- [상품페이지 shopwindow](#상품페이지-shopwindow)
+- [장바구니 cart](#장바구니-cart)
+- [상품구매 order](#상품구매-order)
 
 
 
@@ -25,13 +19,19 @@
 
 ### 메인화면
 
+![multimon](README.assets/multimon-1613356371914.JPG)
 
+### 로그인과 회원가입 accounts
 
-### 로그인과 회원가입 (accounts)
+* 회원가입
+  * 사용자이름, first name, last name, 비밀번호, phone, address를 입력합니다.
+  * 입력한 사항들은 [마이페이지]-[개인정보 변경]을 통해 변경할 수 있습니다.
 
+### 마이페이지 mypage
 
-
-### 마이페이지 (mypage)
+* 개인정보 변경
+  * username, first name, last name, email을 변경할 수 있습니다.
+  * 비밀번호 변경 폼을 이용하면 비밀번호를 변경할 수 있습니다.
 
 * 주문 내역
   * 자신이 주문한 시간, 주문 상품 정보, 주문 금액과 수량을 확인할 수 있습니다.
@@ -47,7 +47,7 @@
 
 
 
-### 상품페이지 (shopwindow)
+### 상품페이지 shopwindow
 
 * List
   * 카테고리를 선택하여 해당 카테고리의 상품 목록을 확인할 수 있습니다.	
@@ -72,7 +72,7 @@
 
 
 
-### 장바구니 (cart)
+### 장바구니 cart
 
 * 장바구니의 상품을 클릭하면 상품 상세 페이지로 넘어갈 수 있습니다.
 * 장바구니에서 상품의 수량을 조절하거나, 장바구니에서 삭제할 수 있습니다.
@@ -81,7 +81,7 @@
 
 
 
-### 상품구매 (order)
+### 상품구매 order
 
 * 자신이 주문한 상품에 대한 이름, 수량, 가격, 그리고 총 주문 금액을 확인 할 수 있습니다.
 * 구매자 정보를 확인할 수 있습니다. 
