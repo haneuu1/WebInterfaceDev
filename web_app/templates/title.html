@@ -17,13 +17,8 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login'%}">
             <i class="fas fa-sign-in-alt" style="color: #EA5903;"></i> 로그인</a></li>
         {% else %}
-<<<<<<< HEAD
-        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:edit_profile'%}"><i class="fas fa-sign-out-alt"></i> 정보수정</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}"><i class="fas fa-sign-out-alt"></i> 로그아웃</a></li>
-=======
         <li class="nav-item"><a class="nav-link" href="{% url 'accounts:logout'%}">
             <i class="fas fa-sign-out-alt" style="color: #EA5903;"></i> 로그아웃</a></li>
->>>>>>> origin/web_list
         {% endif %}   
     </ul>
 </nav>

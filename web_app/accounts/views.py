@@ -32,7 +32,7 @@ def password_success(request):
 class UserEditView(UpdateView):
     template_name = 'registration/edit_profile.html'
     form_class = EditProfileForm
-    success_url = reverse_lazy('accounts:login')
+    success_url = reverse_lazy('mypage:mypage')
 
     def get_object(self):
         return self.request.user
