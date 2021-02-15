@@ -51,6 +51,8 @@ class Product(models.Model):
             self.image = temp_image
         super().save(*args, **kwargs)
 
+def review_image_path(instance, filename):
+    return f'photo/user_{instance.id}/{filename}'
 
 class Review(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
@@ -61,6 +63,7 @@ class Review(models.Model):
                                 verbose_name='OWNER', blank=True, null=True)
     # 전체 상품 말고 주문한 상품으로 받기
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    image = ThumbnailImageField('IMAGE', upload_to=review_image_path, blank = True, null=True)
 
     class Meta:
         ordering = ('-create_dt',) 
@@ -78,6 +81,11 @@ class Review(models.Model):
         return self.get_next_by_create_dt()
 
     def save(self, *args, **kwargs):
+        if self.id is None:
+            temp_image = self.image
+            self.image = None
+            super().save(*args, **kwargs)
+            self.image = temp_image
         super().save(*args, **kwargs)
 
 

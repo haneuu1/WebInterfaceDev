@@ -71,6 +71,9 @@ class ReviewLV(ListView):
     model = Review
     paginate_by = 6
 
+class ReviewDV(DetailView):
+    model = Review
+
 
 #--- FormView
 class SearchFormView(FormView):
@@ -95,7 +98,7 @@ class SearchFormView(FormView):
 class ReviewCreateView(LoginRequiredMixin, CreateView):
     model = Review
     template_name = 'shopwindow/review_form.html'
-    fields = ['title', 'product', 'content']
+    fields = ['title', 'product', 'content', 'image']
     # initial = {'title':'title', 'content':'content'}
     
     def form_valid(self, form):
@@ -107,7 +110,7 @@ class ReviewCreateView(LoginRequiredMixin, CreateView):
 
 class ReviewUpdateView(OwnerOnlyMixin, UpdateView):
     model = Review
-    fields = ['title', 'content', 'product']
+    fields = ['title', 'content', 'product', 'image']
     # success_url = reverse_lazy('shopwindow:index')
 
     def get_success_url(self):

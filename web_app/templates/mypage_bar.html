@@ -1,9 +1,19 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light justify-content-center">
+<nav class="navbar navbar-expand justify-content-center py-1 mt-1 mb-5" style="background-color: #EA5903;">
     <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link" href="{% url 'mypage:mypage' %}">마이페이지</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mypage:myorder' %}">주문조회</a></li>
-        <li class="nav-item"><a class="nav-link" href="{% url 'mypage:mycanceled' %}">주문취소</a></li>
+        <li class="nav-item mypage"><a class="nav-link" href="{% url 'mypage:mypage' %}">마이페이지</a></li>
+        <li class="nav-item mypage"><a class="nav-link" href="{% url 'mypage:myorder' %}">주문조회</a></li>
+        <li class="nav-item mypage"><a class="nav-link" href="{% url 'mypage:mycanceled' %}">주문취소</a></li>
     </ul>
 </nav>
 
-<br>
+<style>
+    nav ul li.mypage {
+        font-size: large;     
+        padding: 0px 15px
+    }
+
+    nav ul li.mypage a {
+        color: white;
+        font-weight: bold;
+    }
+</style>

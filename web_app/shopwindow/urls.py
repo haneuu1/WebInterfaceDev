@@ -21,6 +21,8 @@ urlpatterns = [
     path('review/<int:pk>/delete/', ReviewDeleteView.as_view(), name="review_delete"),
     # /product/review/
     # path('review/', ReviewLV.as_view(), name="review_list"),
+    # /product/review/<int:pk>/
+    path('review/<int:pk>/', ReviewDV.as_view(), name="review_detail"),
 
     # /product/question/add/
     path('question/add/', QuestionCreateView.as_view(), name="question_add"),
