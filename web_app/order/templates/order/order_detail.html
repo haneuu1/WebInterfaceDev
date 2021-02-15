@@ -28,11 +28,11 @@
             </tr>
             <tr>
                 <th>전화번호</th>
-                <td id = "user_phone">{{user.phone}}</td>
+                <td id = "user_phone">{{profile.phone}}</td>
             </tr>
             <tr>
                 <th>주소</th>
-                <td id = "user_address">{{user.address}}</td>
+                <td id = "user_address">{{profile.address}}</td>
             </tr>
         </tbody>
     </table>
@@ -57,6 +57,14 @@
             <tr>
                 <th><label for="destination_email">이메일</label></th>
                 <td><input class="border-0" type="text" id ="destination_email" ></td>
+            </tr>
+            <tr>
+                <th><label for="destination_email">전화번호</label></th>
+                <td><input class="border-0" type="text" id ="destination_phone" ></td>
+            </tr>
+            <tr>
+                <th><label for="destination_email">주소</label></th>
+                <td><input class="border-0" type="text" id ="destination_address" ></td>
             </tr>
         </tbody>
     </table>
@@ -98,11 +106,17 @@
     function same_with_user(){
         let user_name = document.getElementById("user_name").innerHTML;
         let user_email = document.getElementById("user_email").innerHTML;
+        let user_phone = document.getElementById("user_phone").innerHTML;
+        let user_address = document.getElementById("user_address").innerHTML;
         let destination_name = document.getElementById("destination_name");
         let destination_email = document.getElementById("destination_email");
+        let destination_phone = document.getElementById("destination_phone");
+        let destination_address = document.getElementById("destination_address");
 
         destination_name.value = user_name;
         destination_email.value = user_email;
+        destination_phone.value = user_phone;
+        destination_address.value = user_address;
     }
 
 

@@ -1,5 +1,6 @@
 from shopwindow.models import Product
 from order.models import Order
+from accounts.models import Profile
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.generic import View,ListView,DetailView,TemplateView
 from django.urls import reverse
@@ -42,6 +43,7 @@ class OrderVW(View,AccessMixin):
         context = dict()
         context['user']=request.user
         context['products']=products
+        context['profile']=Profile.objects.get(user_id=request.user.pk)
         if total_fee > 30000:
             shipping_fee = 0
         context['shipping_fee'] = shipping_fee
