@@ -30,15 +30,21 @@ class OrderVW(View,AccessMixin):
         # product_quantity.append(1)
         product_ids = list(request.POST.getlist('product_id'))
         # product_ids.append(1)
+        shipping_fee = 2500
+        total_fee = 0
         products = []
         for product_id,quantity in zip(product_ids,product_quantity):
             product = get_object_or_404(Product,pk=product_id)
             product.quantity = quantity
             products.append(product)
+            total_fee += product.quantity*product.price
         # 수량은 이후에 받아서 업데이트 시켜야 함  --> 시킴
         context = dict()
         context['user']=request.user
         context['products']=products
+        if total_fee > 30000:
+            shipping_fee = 0
+        context['shipping_fee'] = shipping_fee
 
         return render(request,self.template_name,context)
 

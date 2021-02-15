@@ -3,16 +3,42 @@
 {% block content %}
 
 
-{% if user.is_superuser %}
 
+<h1 class="mb-3">마이페이지</h1>
+<ul class="list-group">
+    
+    {% if user.is_superuser %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
 
-<a href="{% url 'mypage:add'  %}"> 상품 관리 </a>
+        <a href="{% url 'mypage:add'  %}"> 상품 관리 </a>
+
+    </li>
+    {% endif %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'accounts:edit_profile'  %}"> 개인정보 변경 </a>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'mypage:myorder'  %}"> 주문 내역 </a>
+        <span class="badge badge-primary badge-pill">{{order_num}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'mypage:mycanceled'  %}"> 취소 주문 내역</a>
+        <span class="badge badge-primary badge-pill">{{cancel_num}}</span>
+    </li>
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'cart:wish_list'  %}"> 관심상품</a>
+        <span class="badge badge-primary badge-pill">{{wish_num}}</span>
+    </li>
+</ul>
+
 <br>
 
-{% endif %}
-<a href="{% url 'mypage:myorder'  %}"> 주문 내역 </a>
-<br>
-<a href="{% url 'mypage:mycanceled'  %}"> 취소 주문 내역</a>
+<style>
+    span.badge-pill {
+        background-color: #EA5903;
+    }
+</style>
+
 
 
 {% endblock %}

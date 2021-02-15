@@ -1,62 +1,19 @@
 {% extends 'base_mypage.html' %}
-{% load widget_tweaks %}
-{% block title %}Registration{% endblock %}
-
+{% block title %}Register{% endblock %}
 {% block content %}
+
+
 <h3 class="h3 my-5 font-weight-normal" style="text-align: center"><i class="fas fa-user-plus"></i> 회원가입</h3>
-
-{% if form.errors %}
-<div class="form-group row">
-    <div class="offset-sm-3 col-sm-6">
-        <div class="alert alert-danger">
-            <div class="font-weight-bold">
-                Wrong! Please correct the error(s) below.
-            </div>
-            {{ form.errors }}
-        </div>
-    </div>
-</div>
-{% endif %}
-
-<form action="." method="post">
+<div class="form-group">
+<form method="POST">
     {% csrf_token %}
-    <div class="form-group row">
-        <div class="offset-sm-3 col-sm-6">
-            {{ form.username|add_class:"form-control"|attr:"autofocus"|append_attr:"placeholder:아이디"|append_attr:"autocapitalize:none" }}
-            <span class="helptext"></span>
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="offset-sm-3 col-sm-6">
-            {{ form.password|add_class:"form-control"|append_attr:"placeholder:비밀번호" }}
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="offset-sm-3 col-sm-6">
-            {{ form.password2|add_class:"form-control"|append_attr:"placeholder:비밀번호 확인" }}
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="offset-sm-3 col-sm-2">
-            {{ form.last_name|add_class:"form-control"|attr:"autofocus"|append_attr:"placeholder:성"|append_attr:"autocapitalize:none" }}
-        </div>
-        <div class="col-sm-4">
-            {{ form.first_name|add_class:"form-control"|attr:"autofocus"|append_attr:"placeholder:이름"|append_attr:"autocapitalize:none" }}
-        </div>
-    </div>
-    <div class="form-group row">
-        <div class="offset-sm-3 col-sm-6">
-            {{ form.email|add_class:"form-control"|append_attr:"placeholder:이메일주소" }}
-        </div>
-    </div>
-    <!-- <input type="text" name="phone" autocapitalize="none" placeholder="휴대폰번호" autofocus class="form-control" required id="id_phone">
-    <input type="text" name="address" maxlength="150" autocapitalize="none" placeholder="주소" autofocus class="form-control" required id="id_address"> -->
+    {{ form.as_p }}
+    {{ profile_form.as_p }}
 
-    <hr>
-    <div class="form-group">
-        <div class="offset-sm-3 col-sm-6">
-            <input type="submit" value="회원가입" class="btn btn-dark btn-block"></input>
-        </div>
-    </div>
-</form> 
+    <button class="btn btn-dark btn-block"><i class="fas fa-user-plus"></i> 회원가입 완료 </button>
+</form>
+</div>
+
+
+
 {% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base_mypage.html" %}
+{% load static %}
+{% block title %}cart.html{% endblock %}
+{% block content %}
+{% load humanize %}
+<h3 class="h3 m-5 font-weight-normal" style="text-align: center"><i class="fas fa-heart"></i> 관심상품</h3>
+{% if not products %}
+<p class="mt-5" style="text-align: center;">관심상품이 없습니다.</p>
+{% else %}
+
+<table class="table table-hover table-sm m-0">
+    <thead class="thead-light">
+        <tr>
+            <th style="width: 20%;">목록</th>
+            <th style="width: 40%;">상품정보</th>
+            <th style="width: 10%;">판매가</th>
+            <th style="width: 10%;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for object in products %}
+        <tr>
+            <td>
+                <a href="{% url 'shopwindow:detail' object.product_id %}">
+                    <img width="40%" alt="상품사진" src="{{object.product.image.thumb_url}}">
+                    {{ object }}
+                </a>
+            </td>
+            <td>
+                <p>{{object.product.description}}</p>
+            </td>
+            <td>
+                <p>{{object.product.price|intcomma}}원</p>
+            </td>
+            <td>
+                <div class="btn-group-sm btn-group-vertical">
+                    <a href="{% url 'cart:plus_cart' object.product_id %}" class="btn btn-sm btn-outline-dark">장바구니 담기</a>
+                    <a href="{% url 'cart:remove_wish' object.product_id %}" class="btn btn-sm btn-outline-dark">삭제</a>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

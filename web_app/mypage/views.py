@@ -1,3 +1,4 @@
+from cart.models import WishItem
 from shopwindow.models import Product
 from typing import List
 from django.shortcuts import render,redirect
@@ -24,8 +25,22 @@ class Mypage(View,AccessMixin):
             self.handle_no_permission()
             return redirect(self.get_login_url())
 
-        return render(request, self.template_name ,{})
+        context = self.get_context_data(**kwargs)
 
+        return render(request, self.template_name ,context)
+
+    def get_context_data(self, **kwargs):
+        context = dict()
+        context["order_num"] = Order.objects.filter(Q(owner=self.request.user)&\
+                                    Q(order_status = "Ordered")).count()
+
+        context["cancel_num"] = Order.objects.filter(Q(owner=self.request.user)&\
+                                Q(order_status = "Canceled")).count()
+        
+        context["wish_num"] = WishItem.objects.filter(owner=self.request.user).count()
+        return context
+    
+    
 
 class OrderLV(ListView):
     model = Order

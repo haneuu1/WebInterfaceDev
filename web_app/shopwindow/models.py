@@ -51,6 +51,8 @@ class Product(models.Model):
             self.image = temp_image
         super().save(*args, **kwargs)
 
+def review_image_path(instance, filename):
+    return f'photo/user_{instance.id}/{filename}'
 
 class Review(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
@@ -61,6 +63,7 @@ class Review(models.Model):
                                 verbose_name='OWNER', blank=True, null=True)
     # 전체 상품 말고 주문한 상품으로 받기
     product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    image = ThumbnailImageField('IMAGE', upload_to=review_image_path, blank = True, null=True)
 
     class Meta:
         ordering = ('-create_dt',) 
@@ -78,10 +81,15 @@ class Review(models.Model):
         return self.get_next_by_create_dt()
 
     def save(self, *args, **kwargs):
+        if self.id is None:
+            temp_image = self.image
+            self.image = None
+            super().save(*args, **kwargs)
+            self.image = temp_image
         super().save(*args, **kwargs)
 
 
-class QuestionAnswer(models.Model):
+class Question(models.Model):
     title = models.CharField(verbose_name='TITLE', max_length=50)
     content = models.TextField('CONTENT')
     create_dt = models.DateTimeField('CREATE DATE', auto_now_add=True)
@@ -89,13 +97,41 @@ class QuestionAnswer(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE,
                                 verbose_name='OWNER', blank=True, null=True)
     # 전체 상품 말고 주문한 상품으로 받기
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=1)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ('-create_dt',)
+
+    def __str__(self):
+        return self.title
+
+    def get_absolute_url(self):
+        return '' # reverse('shopwindows:review_add', args=(self.id,))
+    
+    def get_previous(self):
+        return self.get_previous_by_create_dt()
+
+    def get_next(self):
+        return self.get_next_by_create_dt()
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+
+class Answer(models.Model):
+    content = models.TextField('CONTENT')
+    create_dt = models.DateTimeField('CREATE DATE', auto_now_add=True)
+    modify_dt = models.DateTimeField('MODIFY DATE', auto_now=True)
+    owner = models.ForeignKey(User, on_delete=models.CASCADE,
+                                verbose_name='OWNER', blank=True, null=True)
+    # product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    question = models.OneToOneField(Question, on_delete=models.CASCADE)
 
     class Meta:
         ordering = ('-create_dt',) 
 
     def __str__(self):
-        return self.title
+        return self.question
 
     def get_absolute_url(self):
         return '' # reverse('shopwindows:review_add', args=(self.id,))

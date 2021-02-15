@@ -1,11 +1,16 @@
+from shopwindow.models import Product
 from django.contrib.auth.mixins import AccessMixin
 from django.urls import reverse_lazy
+from django.views.generic import ListView
 from django.views.generic import TemplateView
 
-
+from shopwindow.models import Product
+from order.models import Order
 
 # TemplateView
-class HomeView(TemplateView):
+class HomeView(ListView):
+    model = Product
+    paginate_by = 3
     template_name = 'homepage.html'
 
 
